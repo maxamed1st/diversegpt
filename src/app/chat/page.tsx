@@ -2,6 +2,7 @@
 
 import { useSession, signOut, SessionProvider } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { deleteUser } from "@/utils/deleteUser"
 
 export default function Chat() {
   return (
@@ -23,6 +24,14 @@ function MainChatComponent() {
   return (
     <div className="flex flex-col h-screen text-center">
       <h1>Chat</h1>
+      <button onClick={async () => {
+        try {
+          await deleteUser(session?.user?.id as string);
+          signOut();
+        } catch (error) {
+          console.error('Failed to delete account:', error);
+        }
+      }}>Delete account</button>
       <button onClick={() => signOut()}>Logout</button>
     </div>
   );
