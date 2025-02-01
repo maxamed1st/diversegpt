@@ -16,8 +16,8 @@ export default function Chat() {
   }
 
   return (
-    <div>
+    <section>
       <h1>Chat</h1>
-    </div>
+    </section>
   );
 }
