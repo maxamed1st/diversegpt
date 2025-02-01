@@ -1,38 +1,17 @@
-"use client";
-
-import { useSession, signOut, SessionProvider } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { deleteUser } from "@/utils/deleteUser"
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Chat() {
-  return (
-    <SessionProvider>
-      <MainChatComponent />
-    </SessionProvider>
-  )
-}
+  const { data: session } = useSession();
 
-function MainChatComponent() {
-  const { data: session, status } = useSession();
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
   if (!session?.user) {
     useRouter().push("/api/auth/signin");
     return;
   }
+
   return (
-    <div className="flex flex-col h-screen text-center">
+    <div>
       <h1>Chat</h1>
-      <button onClick={async () => {
-        try {
-          await deleteUser(session?.user?.id as string);
-          signOut();
-        } catch (error) {
-          console.error('Failed to delete account:', error);
-        }
-      }}>Delete account</button>
-      <button onClick={() => signOut()}>Logout</button>
     </div>
   );
 }
