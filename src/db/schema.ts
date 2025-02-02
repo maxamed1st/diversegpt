@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm"
 import {
   boolean,
   timestamp,
@@ -7,7 +8,7 @@ import {
   integer,
 } from "drizzle-orm/pg-core"
 import type { AdapterAccountType } from "next-auth/adapters"
- 
+
 export const users = pgTable("user", {
   id: text("id")
     .primaryKey()
@@ -20,7 +21,7 @@ export const users = pgTable("user", {
   subscriptionStatus: text("subscriptionStatus").default('inactive'),
   subscriptionId: text("subscriptionId").unique(),
 })
- 
+
 export const accounts = pgTable(
   "account",
   {
@@ -46,7 +47,7 @@ export const accounts = pgTable(
     },
   ]
 )
- 
+
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").primaryKey(),
   userId: text("userId")
@@ -54,7 +55,7 @@ export const sessions = pgTable("session", {
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
 })
- 
+
 export const verificationTokens = pgTable(
   "verificationToken",
   {
@@ -70,7 +71,7 @@ export const verificationTokens = pgTable(
     },
   ]
 )
- 
+
 export const authenticators = pgTable(
   "authenticator",
   {
@@ -93,3 +94,25 @@ export const authenticators = pgTable(
     },
   ]
 )
+
+export const personas = pgTable("persona", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull(),
+  systemPrompt: text("systemPrompt").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+})
+
+//user has many personas
+export const userRelations = relations(users, ({ many }) => ({
+  personas: many(personas),
+}))
+
+//persona belongs to user
+export const personaRelations = relations(personas, ({ one }) => ({
+  user: one(users, {
+    fields: [personas.userId],
+    references: [users.id],
+  }),
+}))
