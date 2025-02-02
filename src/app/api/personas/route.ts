@@ -2,6 +2,14 @@ import { db } from "@/db";
 import { personas } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { NextResponse } from "next/server";
+import { z } from "zod";
+
+// Validation schemas
+const updatePersonaSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(1),
+  systemPrompt: z.string().min(1),
+});
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -30,7 +38,15 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const { id, name, systemPrompt } = body;
+    const result = updatePersonaSchema.safeParse(body);
+    if (!result.success) {
+      return NextResponse.json(
+        { error: "Invalid input", details: result.error.flatten() },
+        { status: 400 }
+      );
+    }
+
+    const { id, name, systemPrompt } = result.data;
 
     if (!id || !name || !systemPrompt) {
       return NextResponse.json(
