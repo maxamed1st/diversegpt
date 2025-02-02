@@ -5,7 +5,7 @@ import { db } from '@/db';
 import { users } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function GET() {
   try {
