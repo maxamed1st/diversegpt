@@ -50,14 +50,14 @@ export default function PersonaItem({ persona }: { persona: Persona }) {
   return (
     editPersona ? (
       <form onSubmit={handleSubmit}
-        className="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+        className="flex flex-col gap-3 rounded-lg border border-gray-400 bg-subtle p-4 shadow-sm">
         <div className="flex justify-between items-center">
           <input
             type="text"
             name="name"
             defaultValue={persona.name}
             required
-            className="text-lg font-medium border-gray-200 rounded-md px-2 py-1 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="text-lg font-medium bg-background rounded-md px-2 py-1 focus:border focus:border-gray-700 focus:ring-0 outline-none"
           />
           <button 
             type="button"
@@ -67,7 +67,7 @@ export default function PersonaItem({ persona }: { persona: Persona }) {
           </button>
         </div>
         <textarea
-          className="w-full resize-none overflow-hidden min-h-[3em] rounded-md border border-gray-200 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="w-full resize-none overflow-hidden min-h-[3em] bg-background rounded-md px-3 py-2 text-sm focus:ring-0 focus:border focus:border-gray-700 outline-none"
           name="systemPrompt"
           defaultValue={persona.systemPrompt}
           required
@@ -85,21 +85,21 @@ export default function PersonaItem({ persona }: { persona: Persona }) {
           <button
             type="button"
             onClick={() => setEditPersona(false)}
-            className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 text-sm font-medium rounded-md hover:bg-complementary transition-colors"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isLoading}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium bg-analogous2 rounded-md hover:bg-complementary transition-colors disabled:opacity-50"
           >
             {isLoading ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       </form>
     ) : (
-      <li className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+      <li className="rounded-lg border border-gray-400 bg-subtle p-4 shadow-sm">
         <div className="flex justify-between items-center mb-2">
           <h3 className="text-lg font-medium">{persona.name}</h3>
           <button 
@@ -108,7 +108,7 @@ export default function PersonaItem({ persona }: { persona: Persona }) {
             <Pencil size={18} />
           </button>
         </div>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-400">
           {persona.systemPrompt}
         </p>
       </li>
