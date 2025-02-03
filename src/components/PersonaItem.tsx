@@ -67,6 +67,7 @@ export default function PersonaItem({ persona }: { persona: Persona }) {
           name="systemPrompt"
           defaultValue={persona.systemPrompt}
           required
+          autoFocus
           onChange={(e) => {
             e.target.style.height = 'auto';
             e.target.style.height = `${e.target.scrollHeight}px`;
