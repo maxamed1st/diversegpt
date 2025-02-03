@@ -9,6 +9,7 @@ const updatePersonaSchema = z.object({
   id: z.string().uuid(),
   name: z.string().min(1),
   systemPrompt: z.string().min(1),
+  userId: z.string().uuid(),
 });
 
 export async function GET(req: Request) {
@@ -30,13 +31,6 @@ export async function GET(req: Request) {
 
 export async function PATCH(req: Request) {
   try {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
-    
-    if (!userId) {
-      return NextResponse.json({ error: "userId is required" }, { status: 400 });
-    }
-
     const body = await req.json();
     const result = updatePersonaSchema.safeParse(body);
     if (!result.success) {
@@ -46,11 +40,11 @@ export async function PATCH(req: Request) {
       );
     }
 
-    const { id, name, systemPrompt } = result.data;
+    const { id, name, systemPrompt, userId } = result.data;
 
-    if (!id || !name || !systemPrompt) {
+    if (!id || !name || !systemPrompt || !userId) {
       return NextResponse.json(
-        { error: "id, name, and systemPrompt are required" },
+        { error: "id, name, systemPrompt and userId are required" },
         { status: 400 }
       );
     }
@@ -70,8 +64,8 @@ export async function PATCH(req: Request) {
     // Perform the update
     const updated = await db
       .update(personas)
-      .set({ 
-        name, 
+      .set({
+        name,
         systemPrompt,
       })
       .where(and(eq(personas.id, id), eq(personas.userId, userId)))
