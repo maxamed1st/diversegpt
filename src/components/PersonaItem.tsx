@@ -6,11 +6,11 @@ import { useState } from "react";
 export default function PersonaItem({ persona }: { persona: Persona }) {
   const [editPersona, setEditPersona] = useState(false);
   const updatePersona = usePersonasStore((state) => state.updatePersona);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
 
     const formData = new FormData(event.currentTarget);
     const updatedPersona = {
@@ -43,7 +43,7 @@ export default function PersonaItem({ persona }: { persona: Persona }) {
     } catch (error) {
       console.error('Failed to update persona:', error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -77,8 +77,8 @@ export default function PersonaItem({ persona }: { persona: Persona }) {
             e.target.style.height = `${(e.target.scrollHeight)}px`;
           }}
         />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Saving...' : 'Save'}
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Saving...' : 'Save'}
         </button>
       </form>
       :
