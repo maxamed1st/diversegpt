@@ -12,23 +12,6 @@ const updatePersonaSchema = z.object({
   userId: z.string().uuid(),
 });
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const userId = searchParams.get("userId");
-  try {
-    if (userId) {
-      const result = await db.query.personas.findMany({
-        where: eq(personas.userId, userId),
-      });
-      return NextResponse.json(result, { status: 200 });
-    }
-    return NextResponse.json({ error: "userId is required" }, { status: 400 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
-  }
-}
-
 export async function PATCH(req: Request) {
   try {
     const body = await req.json();
