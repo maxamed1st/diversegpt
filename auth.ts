@@ -18,30 +18,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
     Discord,
   ],
-  callbacks: {
-    async signIn({ user }) {
+  events: {
+    async createUser({ user }) {
       try {
-        // Check if this is a new user by looking for existing personas
-        const existingPersonas = await db.query.personas.findMany({
-          where: eq(personas.userId, user.id as string),
-        });
-
-        // If user already has personas, skip creation
-        if (existingPersonas.length > 0) {
-          return true;
-        }
-
-        // Create default personas for new users
         const initialPersonas = defaultPersonas(user);
         await db.insert(personas).values(initialPersonas);
-
       } catch (error) {
         console.error('Error creating default personas:', error);
-        // Don't block sign in if persona creation fails
       }
-
-      return true;
-    },
+    }
+  },
+  callbacks: {
     redirect({ baseUrl }) {
       return baseUrl + '/chat'
     },
