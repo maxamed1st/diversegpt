@@ -8,9 +8,14 @@ export default function PersonasManager() {
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2>Personas</h2>
-      <ul className="flex flex-col gap-2">
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-2xl font-semibold mb-1">Personas</h2>
+        <p className="text-sm text-gray-500">
+          Manage your AI personas identity and behavior.
+        </p>
+      </div>
+      <ul className="flex flex-col gap-4">
         {sortedPersonas?.map((persona) => (
           <PersonaItem persona={persona} key={persona.id} />
         ))}
