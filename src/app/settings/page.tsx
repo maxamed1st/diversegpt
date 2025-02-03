@@ -1,6 +1,7 @@
 "use client";
 
 import DeleteAccount from "@/components/DeleteAccount";
+import EditPersonas from "@/components/PersonasManager";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -17,8 +18,8 @@ export default function Settings() {
   }
 
   return (
-    <section>
-      <h1>Settings</h1>
+    <section className="p-4">
+      <EditPersonas />
       <DeleteAccount />
     </section>
   );
