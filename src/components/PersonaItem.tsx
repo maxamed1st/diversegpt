@@ -19,13 +19,13 @@ export default function PersonaItem({ persona }: { persona: Persona }) {
       systemPrompt: formData.get('systemPrompt') as string,
     };
 
-    // Check if the persona has been updated
-    if (updatedPersona === persona) {
-      setEditPersona(false);
-      return;
-    }
-
     try {
+      // Check if the persona has been updated
+      if (updatedPersona.name == persona.name && updatedPersona.systemPrompt == persona.systemPrompt) {
+        setEditPersona(false);
+        return;
+      }
+
       const response = await fetch(`/api/personas`, {
         method: 'PATCH',
         headers: {
