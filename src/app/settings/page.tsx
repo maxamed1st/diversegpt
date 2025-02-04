@@ -22,7 +22,7 @@ export default function Settings() {
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold mb-1">Settings</h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-base-content/60">
             Manage your account settings and preferences.
           </p>
         </div>

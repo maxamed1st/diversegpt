@@ -11,7 +11,7 @@ export default function PersonasManager() {
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-semibold mb-1">Personas</h2>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-base-content/60">
           Manage your AI personas identity and behavior.
         </p>
       </div>
