@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/../auth";
 import { createChat } from "@/db/queries/chatQueries";
-import { generateTitleFromUserMessage } from "@/app/api/chat/generateName";
+import generateTitleFromUserMessage from "@/utils/generateName";
 
 const createChatSchemaValidation = z.object({
   personaIds: z.string().array(),

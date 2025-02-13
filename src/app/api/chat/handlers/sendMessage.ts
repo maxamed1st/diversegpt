@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/../auth";
-import { generateChatResponses } from "@/app/api/chat/generateResponse";
+import generateChatResponses from "@/lib/generateResponses";
 import { db } from "@/db";
 
 const chatSchemaValidation = z.object({

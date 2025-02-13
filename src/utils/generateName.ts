@@ -1,7 +1,7 @@
 import { generateText } from "ai";
 import { anthropic } from "@ai-sdk/anthropic";
 
-export async function generateTitleFromUserMessage({
+export default async function generateTitleFromUserMessage({
   message,
 }: {
   message: string;

@@ -2,7 +2,7 @@ import { createMessage, getChatPersonas } from "@/db/queries/chatQueries"
 import { generateText } from "ai"
 import { anthropic } from "@ai-sdk/anthropic"
 
-export const generateChatResponses = async ({
+export default async function generateResponses ({
   chatId,
   userMessage,
   userId
@@ -10,7 +10,7 @@ export const generateChatResponses = async ({
   chatId: string,
   userMessage: string,
   userId: string
-}) => {
+}) {
   // First, save the user's message
   await createMessage({
     chatId,
