@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import sendMessageHandler from "../../handlers/sendMessageHandler";
 
 export async function POST(
@@ -6,4 +5,11 @@ export async function POST(
   { params }: { params: { chatId: string } }
 ) {
   return sendMessageHandler(request, { params });
+}
+
+export async function Get(
+  request: Request,
+  { params }: { params: { chatId: string } }
+) {
+  return { message: "Get chat messages with pagination" };
 }
