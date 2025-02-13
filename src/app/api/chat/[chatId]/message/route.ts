@@ -1,4 +1,4 @@
-import sendMessageHandler from "../../handlers/sendMessageHandler";
+import sendMessageHandler from "../../handlers/sendMessage";
 
 export async function POST(
   request: Request,

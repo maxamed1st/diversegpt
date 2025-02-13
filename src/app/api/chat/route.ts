@@ -1,4 +1,4 @@
-import createChatHandler from "@/app/api/chat/handlers/createChatHandler";
+import createChatHandler from "@/app/api/chat/handlers/createChat";
 
 export async function POST(request: Request) {
   return createChatHandler(request);
