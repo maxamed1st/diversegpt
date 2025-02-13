@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm"
+import { relations, sql } from "drizzle-orm"
 import {
   boolean,
   timestamp,
@@ -6,6 +6,7 @@ import {
   text,
   primaryKey,
   integer,
+  index,
 } from "drizzle-orm/pg-core"
 import type { AdapterAccountType } from "next-auth/adapters"
 
@@ -104,15 +105,98 @@ export const personas = pgTable("persona", {
     .references(() => users.id, { onDelete: "cascade" }),
 })
 
+export const chat = pgTable("chat", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  createdAt: timestamp("createdAt", { mode: "date" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+})
+
+export const chatPersona = pgTable("chat_persona", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  chatId: text("chatId")
+    .notNull()
+    .references(() => chat.id, { onDelete: "cascade" }),
+  personaId: text("personaId")
+    .notNull()
+    .references(() => personas.id, { onDelete: "cascade" }),
+})
+
+export const message = pgTable("message", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  chatId: text("chatId")
+    .notNull()
+    .references(() => chat.id, { onDelete: "cascade" }),
+  content: text("content").notNull(),
+  fromUserId: text("fromUserId")
+    .references(() => users.id, { onDelete: "cascade" }),
+  fromPersonaId: text("fromPersonaId")
+    .references(() => personas.id, { onDelete: "cascade" }),
+  createdAt: timestamp("createdAt", { mode: "date" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+}, (message) => ({
+  messageUserIdx: index('message_user_idx').on(message.chatId, message.fromUserId),
+  messagePersonaIdx: index('message_persona_idx').on(message.chatId, message.fromPersonaId),
+  messageCreateAtIdx: index('message_created_at_idx').on(message.createdAt),
+  messageCheckConstraint: sql`CHECK (
+      (fromUserId IS NOT NULL AND fromPersonaId IS NULL) OR 
+      (fromUserId IS NULL AND fromPersonaId IS NOT NULL)
+    )`,
+}))
+
 //user has many personas
 export const userRelations = relations(users, ({ many }) => ({
   personas: many(personas),
 }))
 
 //persona belongs to user
-export const personaRelations = relations(personas, ({ one }) => ({
+export const personaRelations = relations(personas, ({ one, many }) => ({
   user: one(users, {
     fields: [personas.userId],
     references: [users.id],
+  }),
+  chats: many(chatPersona),
+}))
+
+// Chat relations
+export const chatRelations = relations(chat, ({ one, many }) => ({
+  user: one(users, {
+    fields: [chat.userId],
+    references: [users.id],
+  }),
+  personas: many(chatPersona),
+  messages: many(message),
+}))
+
+// ChatPersona relations
+export const chatPersonaRelations = relations(chatPersona, ({ one }) => ({
+  chat: one(chat, {
+    fields: [chatPersona.chatId],
+    references: [chat.id],
+  }),
+  persona: one(personas, {
+    fields: [chatPersona.personaId],
+    references: [personas.id],
+  }),
+}))
+
+// Message relations
+export const messageRelations = relations(message, ({ one }) => ({
+  chat: one(chat, {
+    fields: [message.chatId],
+    references: [chat.id],
+  }),
+  fromUser: one(users, {
+    fields: [message.fromUserId],
+    references: [users.id],
+  }),
+  fromPersona: one(personas, {
+    fields: [message.fromPersonaId],
+    references: [personas.id],
   }),
 }))

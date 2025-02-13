@@ -12,3 +12,16 @@ export type ExtendedSession = {
     personas: Persona[];
   }) | null;
 };
+
+export type chatType = {
+  id: string;
+  name: string;
+  userId: string;
+  createdAt: Date;
+}
+
+export type chatPersonaType = {
+  id: string;
+  chatId: string;
+  personaId: string;
+}
