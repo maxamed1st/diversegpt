@@ -73,3 +73,14 @@ export const createChat = async ({
     name: newChat.name,
   }
 }
+
+// Get all chats
+export const getAllChats = async (userId: string) => {
+  return await db
+    .select({
+      id: chat.id,
+      name: chat.name,
+    })
+    .from(chat)
+    .where(eq(chat.userId, userId))
+}
