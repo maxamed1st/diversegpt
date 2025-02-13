@@ -1,28 +1,7 @@
-import { and, desc, eq } from "drizzle-orm"
+import { eq } from "drizzle-orm"
 import { db } from "../index"
 import { message, chat, chatPersona, personas } from "../schema"
-import { chatPersonaType, chatType, Persona } from "@/types/general"
-
-// Get all messages in a chat (ordered by creation time)
-export const getAllChatMessages = async (chatId: string) => {
-  return await db.select()
-    .from(message)
-    .where(eq(message.chatId, chatId))
-    .orderBy(desc(message.createdAt))
-}
-
-// Get 1-on-1 conversation between user and specific persona
-export const getOneOnOneConversation = async (chatId: string, personaId: string) => {
-  return await db.select()
-    .from(message)
-    .where(
-      and(
-        eq(message.chatId, chatId),
-        eq(message.fromPersonaId, personaId)
-      )
-    )
-    .orderBy(desc(message.createdAt))
-}
+import { chatPersonaType } from "@/types/general"
 
 // Get all personas in a chat
 export const getChatPersonas = async (chatId: string) => {
@@ -94,19 +73,3 @@ export const createChat = async ({
     name: newChat.name,
   }
 }
-
-// Get chat details with personas
-export const getChatDetails = async (chatId: string) => {
-  const chatDetails = await db.select()
-    .from(chat)
-    .where(eq(chat.id, chatId))
-    .limit(1)
-
-  const chatPersonas = await getChatPersonas(chatId)
-
-  return {
-    ...chatDetails[0],
-    personas: chatPersonas
-  }
-}
-
