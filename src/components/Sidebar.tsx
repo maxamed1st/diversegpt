@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { Menu, X, CreditCard, Settings, LogOut } from "lucide-react";
+import ChatList from "./Chatlist";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -82,7 +83,10 @@ export default function Sidebar() {
             </button>
 
             {/* Sidebar Content */}
-            {menuContent}
+            <div className="flex flex-col h-full">
+              <ChatList />
+              {menuContent}
+            </div>
           </div>
         </div>
       )}

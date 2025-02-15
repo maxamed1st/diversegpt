@@ -25,3 +25,8 @@ export type chatPersonaType = {
   chatId: string;
   personaId: string;
 }
+
+export type Chat = {
+  id: string;
+  name: string;
+}
