@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { eq, desc, count } from "drizzle-orm";
 import { message } from "@/db/schema";
+import { auth } from "@/../auth";
 
 
 const paginationSchema = z.object({
@@ -26,6 +27,17 @@ export default async function(
   { params }: { params: { chatId: string } }
 ) {
   try {
+    // Check authentication
+    const session = await auth();
+    const userId = session?.user?.id
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Authentication required" },
+        { status: 401 }
+      );
+    }
+
     const chatId = params.chatId;
     const { searchParams } = new URL(request.url);
     const pagination = paginationSchema.parse({
