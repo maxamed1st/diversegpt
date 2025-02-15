@@ -1,4 +1,5 @@
 import sendMessageHandler from "../../handlers/sendMessage";
+import getMessagesHandler from "../../handlers/getMessages";
 
 export async function POST(
   request: Request,
@@ -11,5 +12,5 @@ export async function Get(
   request: Request,
   { params }: { params: { chatId: string } }
 ) {
-  return { message: "Get chat messages with pagination" };
+  return getMessagesHandler(request, { params });
 }

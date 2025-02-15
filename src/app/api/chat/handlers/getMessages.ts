@@ -1,0 +1,72 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { db } from "@/db";
+import { eq, desc, count } from "drizzle-orm";
+import { message } from "@/db/schema";
+
+
+const paginationSchema = z.object({
+  offset: z.coerce
+    .number()
+    .int()
+    .min(0)
+    .default(0)
+    .describe("Number of items to skip"),
+  limit: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(50)
+    .default(24)
+    .describe("Number of items to return"),
+});
+
+export default async function(
+  request: Request,
+  { params }: { params: { chatId: string } }
+) {
+  try {
+    const chatId = params.chatId;
+    const { searchParams } = new URL(request.url);
+    const pagination = paginationSchema.parse({
+      offset: searchParams.get('offset'),
+      limit: searchParams.get('limit'),
+    });
+
+    // Get total count for pagination info
+    const [{ count: totalCount }] = await db
+      .select({ count: count() })
+      .from(message)
+      .where(eq(message.chatId, chatId));
+
+    // Get messages
+    const messages = await db.query.message.findMany({
+      where: eq(message.chatId, chatId),
+      orderBy: desc(message.createdAt),
+      offset: pagination.offset,
+      limit: pagination.limit,
+    });
+
+    return NextResponse.json({
+      messages,
+      hasMore: pagination.offset + messages.length < totalCount,
+    });
+  }
+  catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error(error.errors);
+      return NextResponse.json(
+        {
+          error: "Invalid pagination parameters",
+        },
+        { status: 400 }
+      );
+    }
+
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
