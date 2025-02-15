@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { eq, desc, count } from "drizzle-orm";
 import { message } from "@/db/schema";
 import { auth } from "@/../auth";
+import { getChatMessages } from "@/db/queries/chatQueries";
 
 
 const paginationSchema = z.object({
@@ -51,13 +52,7 @@ export default async function(
       .from(message)
       .where(eq(message.chatId, chatId));
 
-    // Get messages
-    const messages = await db.query.message.findMany({
-      where: eq(message.chatId, chatId),
-      orderBy: desc(message.createdAt),
-      offset: pagination.offset,
-      limit: pagination.limit,
-    });
+    const messages = await getChatMessages(chatId, pagination.offset, pagination.limit);
 
     return NextResponse.json({
       messages,

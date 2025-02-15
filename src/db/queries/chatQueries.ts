@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm"
+import { eq, desc } from "drizzle-orm"
 import { db } from "../index"
 import { message, chat, chatPersona, personas } from "../schema"
 import { chatPersonaType } from "@/types/general"
@@ -36,6 +36,16 @@ export const createMessage = async ({
       fromPersonaId,
     })
     .returning()
+}
+
+// Gett all messages in a chat
+export const getChatMessages = async (chatId: string, offset: number, limit: number) => {
+  return await db.query.message.findMany({
+      where: eq(message.chatId, chatId),
+      orderBy: desc(message.createdAt),
+      offset: offset,
+      limit: limit,
+    });
 }
 
 // Create a new chat
