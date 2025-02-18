@@ -10,7 +10,7 @@ const createChatSchemaValidation = z.object({
 })
 
 export default async function(request: Request) {
-  const body = request.body;
+  const body = await request.json();
 
   const result = createChatSchemaValidation.safeParse(body);
   if (!result.success) {

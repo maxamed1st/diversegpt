@@ -13,7 +13,7 @@ export default async function(
   { params }: { params: Promise<{ chatId: string }> }
 ) {
   const chatId = (await params).chatId
-  const body = request.body;
+  const body = await request.json();
 
   const result = chatSchemaValidation.safeParse(body);
   if (!result.success) {
