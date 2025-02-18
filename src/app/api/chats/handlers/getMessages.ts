@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/db";
-import { eq, desc, count } from "drizzle-orm";
+import { eq, count } from "drizzle-orm";
 import { message } from "@/db/schema";
 import { auth } from "@/../auth";
 import { getChatMessages } from "@/db/queries/chatQueries";
