@@ -10,9 +10,9 @@ const chatSchemaValidation = z.object({
 
 export default async function(
   request: Request,
-  { params }: { params: { chatId: string } }
+  { params }: { params: Promise<{ chatId: string }> }
 ) {
-  const chatId = params.chatId
+  const chatId = (await params).chatId
   const body = request.body;
 
   const result = chatSchemaValidation.safeParse(body);

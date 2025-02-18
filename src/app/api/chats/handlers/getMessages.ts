@@ -25,7 +25,7 @@ const paginationSchema = z.object({
 
 export default async function(
   request: Request,
-  { params }: { params: { chatId: string } }
+  { params }: { params: Promise<{ chatId: string }> }
 ) {
   try {
     // Check authentication
@@ -39,7 +39,7 @@ export default async function(
       );
     }
 
-    const chatId = params.chatId;
+    const chatId = (await params).chatId;
     const { searchParams } = new URL(request.url);
     const pagination = paginationSchema.parse({
       offset: searchParams.get('offset'),
