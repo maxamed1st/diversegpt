@@ -8,7 +8,7 @@ export async function POST(
   return sendMessageHandler(request, { params });
 }
 
-export async function Get(
+export async function GET(
   request: Request,
   { params }: { params: { chatId: string } }
 ) {
