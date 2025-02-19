@@ -41,7 +41,7 @@ export default async function(request: Request) {
   // generate chat name
   const title = await generateTitleFromUserMessage({ message });
   // create a new chat and chat personas
-  const chatId = await createChat({ name: title, userId: userId as string, personaIds: personaIds as string[] });
+  const chat = await createChat({ name: title, userId: userId as string, personaIds: personaIds as string[] });
 
-  return NextResponse.json({ chatId }, { status: 200 });
+  return NextResponse.json({ chat }, { status: 200 });
 }
