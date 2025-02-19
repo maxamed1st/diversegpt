@@ -10,10 +10,8 @@ import { User } from "next-auth";
 
 function SyncUserData() {
   const { data: session} = useSession() as unknown as ExtendedSession;
-  const setUser = useUserStore((state) => state.setUser);
-  const clearUser = useUserStore((state) => state.clearUser);
-  const setPersonas = usePersonasStore((state) => state.setPersonas);
-  const clearPersonas = usePersonasStore((state) => state.clearPersonas);
+  const { setUser, clearUser } = useUserStore();
+  const { setPersonas, clearPersonas } = usePersonasStore();
 
   useEffect(() => {
     if (session) {
