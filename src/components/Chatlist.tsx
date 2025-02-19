@@ -30,9 +30,9 @@ export default function ChatList() {
         <Plus className="w-5 h-5" />
         New Chat
       </button>
-      {chats?.length > 0 && chats.map((chat) => (
+      {chats?.length > 0 && chats.map((chat, index) => (
         <button
-          key={chat.id}
+          key={index}
           className="flex items-center gap-3 px-4 py-2 bg-base-200 hover:bg-base-300 transition"
           onClick={() => router.push(`/chat/${chat.id}`)}
         >
