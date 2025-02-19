@@ -3,14 +3,14 @@ import getMessagesHandler from "../../handlers/getMessages";
 
 export async function POST(
   request: Request,
-  { params }: { params: { chatId: string } }
+  { params }: { params: Promise<{ chatId: string }> }
 ) {
   return sendMessageHandler(request, { params });
 }
 
 export async function GET(
   request: Request,
-  { params }: { params: { chatId: string } }
+  { params }: { params: Promise<{ chatId: string }> }
 ) {
   return getMessagesHandler(request, { params });
 }
