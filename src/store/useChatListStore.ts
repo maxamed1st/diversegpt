@@ -5,13 +5,13 @@ interface ChatListStore {
   chats: Chat[];
   setChats: (chats: Chat[]) => void;
   addChat: (newChat: Chat) => void;
-};
+}
 
 export const useChatListStore = create<ChatListStore>()((set) => ({
-  chats: [],
-  setChats: (chats: Chat[]) => set({ chats }),
-  addChat: (newChat) =>
+  chats: [] as Chat[],
+  setChats: (chats: Chat[]) => set({ chats: chats || [] }),
+  addChat: (newChat: Chat) =>
     set((state) => ({
-      chats: state.chats ? [newChat, ...state.chats] : [newChat],
+      chats: [...(Array.isArray(state.chats) ? state.chats : []), newChat],
     })),
 }));
