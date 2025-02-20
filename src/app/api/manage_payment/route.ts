@@ -50,6 +50,9 @@ export async function GET() {
         mode: 'subscription',
         success_url: `${process.env.BASE_URL}/chat/new`,
         cancel_url: `${process.env.BASE_URL}/settings`,
+        subscription_data: {
+          trial_period_days: 1
+        }
       })
       return NextResponse.json({
         url: session.url
