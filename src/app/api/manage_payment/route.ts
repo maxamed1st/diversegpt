@@ -48,8 +48,8 @@ export async function GET() {
           },
         ],
         mode: 'subscription',
-        success_url: `${process.env.BASE_URL}/chat`,
-        cancel_url: `${process.env.BASE_URL}/chat`,
+        success_url: `${process.env.BASE_URL}/chat/new`,
+        cancel_url: `${process.env.BASE_URL}/settings`,
       })
       return NextResponse.json({
         url: session.url
@@ -59,7 +59,7 @@ export async function GET() {
     // Create a billing portal session for existing customers
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: stripeCustomerId,
-      return_url: `${process.env.BASE_URL}/chat`,
+      return_url: `${process.env.BASE_URL}/chat/new`,
     });
 
     return NextResponse.json({ url: portalSession.url });
