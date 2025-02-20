@@ -2,7 +2,7 @@ import { createMessage, getChatPersonas } from "@/db/queries/chatQueries"
 import { generateText } from "ai"
 import { anthropic } from "@ai-sdk/anthropic"
 
-export default async function generateResponses ({
+export default async function generateResponses({
   chatId,
   userMessage,
   userId
@@ -29,14 +29,16 @@ export default async function generateResponses ({
         system: persona.systemPrompt,
         prompt: userMessage,
       })
-      await createMessage({
+      const [savedMessage] = await createMessage({
         chatId,
         content: result.text,
-        fromUserId: persona.personaId,
+        fromPersonaId: persona.personaId,
       });
       return {
-        text: result.text,
-        personaId: persona.personaId
+        id: savedMessage.id,
+        content: result.text,
+        fromPersonaId: persona.personaId,
+        createdAt: savedMessage.createdAt,
       }
     }));
 
