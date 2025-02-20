@@ -12,7 +12,7 @@ export default function ChatList() {
     async function fetchChats() {
       try {
         const response = await fetch("/api/chats");
-        const data: Chat[] = await response.json();
+        const { chats: data }: { chats: Chat[] } = await response.json();
         setChats(data);
       } catch (error) {
         console.error("Error fetching chats:", error);
