@@ -30,3 +30,12 @@ export type Chat = {
   id: string;
   name: string;
 }
+
+export type Message = {
+  id: string;
+  chatId: string;
+  content: string;
+  fromUserId: string | undefined;
+  fromPersonaId: string | undefined;
+  createdAt: Date;
+}
