@@ -17,6 +17,7 @@ export default async function(
 
   const result = chatSchemaValidation.safeParse(body);
   if (!result.success) {
+    console.error("Invalid input", result.error.flatten());
     return NextResponse.json(
       { error: "Invalid input", details: result.error.flatten() },
       { status: 400 }
@@ -28,6 +29,7 @@ export default async function(
   const userId = session?.user?.id
 
   if (!userId) {
+    console.error("Authentication required");
     return NextResponse.json(
       { error: "Authentication required" },
       { status: 401 }
@@ -35,6 +37,7 @@ export default async function(
   }
 
   if (!message) {
+    console.error("message is required");
     return NextResponse.json(
       { error: "message is required" },
       { status: 400 }
@@ -50,6 +53,7 @@ export default async function(
   });
 
   if (!chat) {
+    console.error("Chat not found");
     return NextResponse.json(
       { error: "Chat not found" },
       { status: 404 }
@@ -65,6 +69,7 @@ export default async function(
   });
 
   if (!user) {
+    console.error("User not found");
     return NextResponse.json(
       { error: "User not found" },
       { status: 404 }
@@ -72,6 +77,7 @@ export default async function(
   }
 
   if (user.subscriptionStatus !== "active" && user.subscriptionStatus !== "trialing") {
+    console.error("Subscription required", user.subscriptionStatus);
     return NextResponse.json(
       { error: "Subscription required" },
       { status: 400 }
