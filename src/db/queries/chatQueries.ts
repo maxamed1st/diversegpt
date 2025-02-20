@@ -79,7 +79,7 @@ export const createChat = async ({
   }
 
   return {
-    chatId: newChat.id,
+    id: newChat.id,
     name: newChat.name,
   }
 }
