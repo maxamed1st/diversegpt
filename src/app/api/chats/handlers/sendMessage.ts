@@ -86,6 +86,7 @@ export default async function(
 
   // generate response for each persona and save to db
   const responses = await generateChatResponses({ chatId, userMessage: message, userId });
+  const data = { userId, responses }
 
-  return NextResponse.json({ responses });
+  return NextResponse.json(data);
 }
