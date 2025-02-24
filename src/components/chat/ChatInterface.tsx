@@ -85,6 +85,7 @@ export default function ChatInterface({
             userId={userId}
             hasMore={hasMore}
             onLoadMoreAction={loadMoreMessages}
+            isLoading={isLoading}
             error={error}
           />
         </div>
