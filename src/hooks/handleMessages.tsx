@@ -34,6 +34,13 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
     limit: 24,
   });
 
+  // Helper function to sort messages
+  const sortMessages = useCallback((msgs: Message[]) => {
+    return [...msgs].sort((a, b) => 
+      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
+  }, []);
+
   // Fetch messages
   const fetchMessages = useCallback(async (offset: number, limit: number) => {
     try {
@@ -51,9 +58,9 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
       const messages = data.messages || [];
       
       if (offset === 0) {
-        setMessages(messages);
+        setMessages(sortMessages(messages));
       } else {
-        setMessages(prev => [...messages, ...prev]);
+        setMessages(prev => sortMessages([...messages, ...prev]));
       }
       
       setHasMore(!!data.hasMore);
@@ -94,7 +101,19 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
       setIsSending(true);
       setError(null);
 
-      console.warn(`/api/chats/${overrideChatId}/messages`, content);
+      // Add user message
+      const userMessage: Message = {
+        id: crypto.randomUUID(),
+        content,
+        chatId,
+        fromUserId: undefined,
+        fromPersonaId: undefined,
+        createdAt: new Date(),
+      };
+
+      // Optimistically add user message
+      setMessages(prev => sortMessages([...prev, userMessage]));
+
       const response = await fetch(`/api/chats/${overrideChatId || chatId}/messages`, {
         method: 'POST',
         headers: {
@@ -109,14 +128,9 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
 
       const data = await response.json();
       
-      // Add user message
-      const userMessage: Message = {
-        id: crypto.randomUUID(),
-        content,
-        chatId,
-        fromUserId: data.userId,
-        fromPersonaId: undefined,
-        createdAt: new Date(),
+      const updatedUserMessage: Message = {
+        ...userMessage,
+        fromUserId: data.fromUserId,
       };
 
       // Add AI responses
@@ -128,14 +142,18 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
         fromPersonaId: response.fromPersonaId,
       }));
 
-      setMessages(prev => [...prev, userMessage, ...aiResponses]);
+      setMessages(prev => {
+        // Remove the optimistic user message and add the updated one with AI responses
+        const withoutOptimistic = prev.filter(msg => msg.id !== userMessage.id);
+        return sortMessages([...withoutOptimistic, updatedUserMessage, ...aiResponses]);
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to send message');
       throw err;
     } finally {
       setIsSending(false);
     }
-  }, [chatId]);
+  }, [chatId, sortMessages]);
 
   return {
     messages,

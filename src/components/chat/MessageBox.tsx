@@ -42,11 +42,6 @@ export default function MessageBox({
 }: MessageBoxProps) {
   const [collapsedMessages, setCollapsedMessages] = useState<Set<string>>(new Set());
 
-  // Sort messages by createdAt
-  const sortedMessages = [...messages].sort((a, b) => 
-    new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-  );
-
   const toggleCollapse = (messageId: string) => {
     setCollapsedMessages(prev => {
       const newSet = new Set(prev);
@@ -79,8 +74,8 @@ export default function MessageBox({
         <MessageSkeleton />
       ) : (
         <div className="space-y-4">
-          {sortedMessages.map((message) => {
-            const isUser = message.fromUserId === userId;
+          {messages.map((message) => {
+            const isUser = !message.fromPersonaId;
             const isCollapsed = !isUser && collapsedMessages.has(message.id);
             
             return (
