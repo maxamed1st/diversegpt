@@ -36,7 +36,7 @@ export default function ChatList() {
       
       {loading ? (
         <div className="space-y-2">
-          {[...Array(3)].map((_, i) => (
+          {[...Array(5)].map((_, i) => (
             <div 
               key={i} 
               className="animate-pulse h-12 bg-base-200 rounded"
