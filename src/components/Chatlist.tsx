@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useChatListStore } from "@/store/useChatListStore"
 import { Chat } from "@/types/general";
@@ -7,6 +7,7 @@ import { Chat } from "@/types/general";
 export default function ChatList() {
   const router = useRouter();
   const { chats, setChats } = useChatListStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchChats() {
@@ -16,10 +17,12 @@ export default function ChatList() {
         setChats(data);
       } catch (error) {
         console.error("Error fetching chats:", error);
+      } finally {
+        setLoading(false);
       }
     }
     fetchChats();
-  }, [])
+  }, []);
 
   return (
     <div className="p-12 flex-1 overflow-y-auto flex flex-col space-y-4">
@@ -30,16 +33,31 @@ export default function ChatList() {
         <Plus className="w-5 h-5" />
         New Chat
       </button>
-      {chats?.length > 0 && chats.map((chat, index) => (
-        <button
-          key={index}
-          className="flex items-center gap-3 px-4 py-2 bg-base-200 hover:bg-base-300 transition"
-          onClick={() => router.push(`/chat/${chat.id}`)}
-        >
-          {chat.name}
-        </button>
-      ))
-      }
+      
+      {loading ? (
+        <div className="space-y-2">
+          {[...Array(3)].map((_, i) => (
+            <div 
+              key={i} 
+              className="animate-pulse h-12 bg-base-200 rounded"
+            />
+          ))}
+        </div>
+      ) : chats?.length > 0 ? (
+        chats.map((chat) => (
+          <button
+            key={chat.id}
+            className="flex items-center gap-3 px-4 py-2 bg-base-200 hover:bg-base-300 transition rounded"
+            onClick={() => router.push(`/chat/${chat.id}`)}
+          >
+            {chat.name}
+          </button>
+        ))
+      ) : (
+        <div className="text-center text-base-content/60">
+          No chats yet. Start a new conversation!
+        </div>
+      )}
     </div>
-  )
+  );
 }
