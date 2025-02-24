@@ -30,7 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     redirect({ baseUrl }) {
-      return baseUrl + '/chat'
+      return baseUrl + '/chat/new'
     },
     async session({ session, user }) {
       if (session?.user) {
