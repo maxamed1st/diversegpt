@@ -81,6 +81,7 @@ export const createChat = async ({
   return {
     id: newChat.id,
     name: newChat.name,
+    createdAt: newChat.createdAt,
   }
 }
 
@@ -90,6 +91,7 @@ export const getAllChats = async (userId: string) => {
     .select({
       id: chat.id,
       name: chat.name,
+      createdAt: chat.createdAt
     })
     .from(chat)
     .where(eq(chat.userId, userId))
