@@ -1,4 +1,6 @@
 import { Session } from "next-auth";
+import { User } from "next-auth";
+
 
 export type Persona = {
   id: string;
@@ -7,10 +9,16 @@ export type Persona = {
   userId: string;
 }
 
-export type ExtendedSession = {
-  data: (Session & {
-    personas: Persona[];
-  }) | null;
+export type ExtendedUser = User & {
+  emailVerified?: Date | null;
+  stripeCustomerId?: string | null;
+  subscriptionStatus?: string | null;
+  subscriptionId?: string | null;
+}
+
+export type ExtendedSession = Session & {
+  user: ExtendedUser;
+  personas: Persona[];
 };
 
 export type chatType = {

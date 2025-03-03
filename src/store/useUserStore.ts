@@ -1,9 +1,9 @@
+import { ExtendedUser } from "@/types/general";
 import { create } from "zustand";
-import { User } from "next-auth";
 
 interface UserStore {
-  user: User | undefined;
-  setUser: (user: User) => void;
+  user: ExtendedUser | undefined;
+  setUser: (user: ExtendedUser) => void;
   clearUser: () => void;
 };
 

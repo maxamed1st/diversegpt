@@ -6,21 +6,20 @@ import { useEffect } from "react";
 import { useUserStore } from "@/store/useUserStore";
 import { usePersonasStore } from "@/store/usePersonasStore";
 import { ExtendedSession } from "@/types/general";
-import { User } from "next-auth";
 
 function SyncUserData() {
-  const { data: session} = useSession() as unknown as ExtendedSession;
+  const { data: session } = useSession() as { data: unknown } as { data: ExtendedSession | null };
   const { setUser, clearUser } = useUserStore();
   const { setPersonas, clearPersonas } = usePersonasStore();
 
   useEffect(() => {
     if (session) {
-      setUser(session?.user as User);
-      setPersonas(session?.personas);
+      setUser(session.user);
+      setPersonas(session.personas);
     } else {
       clearUser();
       clearPersonas();
-    } 
+    }
   }, [session, setUser, setPersonas, clearUser, clearPersonas]);
   return null
 }

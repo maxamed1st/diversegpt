@@ -1,7 +1,7 @@
 import { personas } from "@/db/schema";
-import { User } from "next-auth";
+import { ExtendedUser } from "@/types/general";
 
-export default function defaultPersonas(user: User) {
+export default function defaultPersonas(user: ExtendedUser) {
   const defaultPersonasArray: typeof personas.$inferInsert[] = [
     {
       id: crypto.randomUUID(),
