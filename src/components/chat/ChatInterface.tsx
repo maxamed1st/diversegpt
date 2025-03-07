@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useChatListStore } from '@/store/useChatListStore';
+import { useUserStore } from '@/store/useUserStore';
 import MessageInput from './MessageInput';
 import MessageBox from './MessageBox'
 import { useMessages } from '@/hooks/handleMessages';
@@ -95,6 +96,7 @@ export default function ChatInterface({
           <MessageInput 
             action={handleMessageSubmit}
             disabled={isSending || isLoading}
+            subscriptionStatus={useUserStore().user?.subscriptionStatus}
           />
         </div>
       </div>
