@@ -26,6 +26,15 @@ export default function MessageInput({
           isSubscriptionInactive ? "You need to set up subscription to chat" : "type a message..."}
           disabled={isSubscriptionInactive}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              if (message.trim() && !disabled && !isSubscriptionInactive) {
+                action(message);
+                setMessage("");
+              }
+            }
+          }}
           value={message}
           required
           autoFocus
