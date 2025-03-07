@@ -6,9 +6,10 @@ interface PersonaStore {
   setPersonas: (personas: Persona[]) => void;
   updatePersona: (updatedPersona: Persona) => void;
   clearPersonas: () => void;
+  getPersonaName: (id: string) => string | undefined;
 };
 
-export const usePersonasStore = create<PersonaStore>()((set) => ({
+export const usePersonasStore = create<PersonaStore>()((set, get) => ({
   personas: undefined,
   setPersonas: (personas) => set({ personas }),
   updatePersona: (updatedPersona) =>
@@ -24,4 +25,8 @@ export const usePersonasStore = create<PersonaStore>()((set) => ({
       )
     })),
   clearPersonas: () => set({ personas: undefined }),
+  getPersonaName: (id) => {
+    const persona = get().personas?.find((persona) => persona.id === id);
+    return persona?.name;
+  }
 }));

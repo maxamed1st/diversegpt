@@ -3,6 +3,7 @@
 import { Message } from '@/types/general';
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { usePersonasStore } from '@/store/usePersonasStore';
 
 interface MessageBoxProps {
   messages: Message[];
@@ -91,9 +92,16 @@ export default function MessageBox({
                   } ${!isUser && 'flex items-start gap-2'}`}
                   onClick={() => !isUser && toggleCollapse(message.id)}
                 >
-                  <div>{isCollapsed 
-                    ? message.content.slice(0, 100) + '...' 
-                    : message.content}
+                  <div className="space-y-1">
+                    {!isUser && (
+                      <div className="text-sm font-medium text-base-content/70">
+                        {usePersonasStore.getState().getPersonaName(message.fromPersonaId!)}
+                      </div>
+                    )}
+                    <div>{isCollapsed 
+                      ? message.content.slice(0, 100) + '...' 
+                      : message.content}
+                    </div>
                   </div>
                   {!isUser && (
                     <div className="flex-shrink-0 mt-1">
