@@ -7,7 +7,6 @@ import { usePersonasStore } from '@/store/usePersonasStore';
 
 interface MessageBoxProps {
   messages: Message[];
-  userId: string;
   hasMore: boolean;
   onLoadMoreAction: () => void;
   isLoading: boolean;
@@ -35,7 +34,6 @@ const MessageSkeleton = () => (
 
 export default function MessageBox({ 
   messages, 
-  userId, 
   hasMore, 
   onLoadMoreAction, 
   isLoading,

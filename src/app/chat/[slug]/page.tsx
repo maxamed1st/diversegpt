@@ -24,7 +24,6 @@ export default async function ChatPage({ params }: { params: Promise<{ slug: str
       <ChatInterface
         chatId={null}
         isNewChat={true}
-        userId={userId}
         initialPersonas={personasIds}
       />
     );
@@ -45,7 +44,6 @@ export default async function ChatPage({ params }: { params: Promise<{ slug: str
     <ChatInterface
       chatId={chatId}
       isNewChat={false}
-      userId={userId}
     />
   );
 }

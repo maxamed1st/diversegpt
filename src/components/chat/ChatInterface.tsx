@@ -11,14 +11,12 @@ import { Chat } from "@/types/general";
 interface ChatInterfaceProps {
   chatId: string | null;
   isNewChat: boolean;
-  userId: string;
   initialPersonas?: any[];
 }
 
 export default function ChatInterface({ 
   chatId, 
   isNewChat, 
-  userId,
   initialPersonas 
 }: ChatInterfaceProps) {
   const router = useRouter();
@@ -83,7 +81,6 @@ export default function ChatInterface({
         <div className="flex-1 overflow-auto">
           <MessageBox
             messages={messages}
-            userId={userId}
             hasMore={hasMore}
             onLoadMoreAction={loadMoreMessages}
             isLoading={isLoading}
