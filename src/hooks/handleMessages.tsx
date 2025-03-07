@@ -28,7 +28,7 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSending, setIsSending] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
   const [pagination, setPagination] = useState<PaginationInfo>({
     offset: 0,
     limit: 24,
