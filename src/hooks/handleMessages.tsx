@@ -111,8 +111,17 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
         createdAt: new Date(),
       };
 
+      const loadingIndicator: Message = {
+        id: crypto.randomUUID(),
+        content: 'loading...',
+        chatId,
+        fromUserId: undefined,
+        fromPersonaId: 'loading-indicator',
+        createdAt: new Date(),
+      };
+
       // Optimistically add user message
-      setMessages(prev => sortMessages([...prev, userMessage]));
+      setMessages(prev => sortMessages([...prev, userMessage, loadingIndicator]));
 
       const response = await fetch(`/api/chats/${overrideChatId || chatId}/messages`, {
         method: 'POST',
@@ -144,7 +153,7 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
 
       setMessages(prev => {
         // Remove the optimistic user message and add the updated one with AI responses
-        const withoutOptimistic = prev.filter(msg => msg.id !== userMessage.id);
+        const withoutOptimistic = prev.filter(msg => msg.id !== userMessage.id && msg.id !== loadingIndicator.id);
         return sortMessages([...withoutOptimistic, updatedUserMessage, ...aiResponses]);
       });
     } catch (err) {
