@@ -88,7 +88,7 @@ export default function MessageBox({
                       ? 'bg-base-200 rounded-br-none cursor-default' 
                       : 'bg-base-300 rounded-bl-none cursor-pointer hover:bg-base-200'
                   } ${!isUser && 'flex items-start gap-2'}`}
-                  onClick={() => !isUser && toggleCollapse(message.id)}
+                  onClick={() => !isUser && message.content.length > 104 && toggleCollapse(message.id)}
                 >
                   <div className="space-y-1">
                     {!isUser && (
@@ -101,7 +101,7 @@ export default function MessageBox({
                       : message.content}
                     </div>
                   </div>
-                  {!isUser && (
+                  {!isUser && message.content.length > 104 && (
                     <div className="flex-shrink-0 mt-1">
                       {isCollapsed 
                         ? <ChevronDown className="w-4 h-4" /> 
