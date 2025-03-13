@@ -1,4 +1,4 @@
-import { createMessage, getChatPersonas } from "@/db/queries/chatQueries"
+import { createMessage, getChatMessages, getChatPersonas } from "@/db/queries/chatQueries"
 import { generateText } from "ai"
 import { anthropic } from "@ai-sdk/anthropic"
 
@@ -21,13 +21,21 @@ export default async function generateResponses({
   // Get all personas in this chat with their system prompts
   const chatPersonas = await getChatPersonas(chatId);
 
+  // Get recent messages for context
+  const recentMessages = await getChatMessages(chatId, 1, 12); 
+  // Format each message in a consistent way
+  const context = recentMessages.reverse().map((message) => {
+    const role = message.fromUserId === userId ? 'user' : chatPersonas.filter(persona => persona.personaId === message.fromPersonaId)[0].name;
+    return `role: ${role}\ncontent: ${message.content}`;
+  }).join('\n\n');
+
   // Generate and save responses from each persona
   try {
     const responses = await Promise.all(chatPersonas.map(async (persona) => {
       const result = await generateText({
         model: anthropic('claude-3-5-sonnet-latest'),
         system: persona.systemPrompt,
-        prompt: userMessage,
+        prompt: context + "\n\n" + `role: user\ncontent: ${userMessage}\n\nrole: ${persona.name}\ncontent: `,
       })
       const [savedMessage] = await createMessage({
         chatId,
