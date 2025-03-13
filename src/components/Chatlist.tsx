@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useChatListStore } from "@/store/useChatListStore"
 import { Chat } from "@/types/general";
+import { useToastStore } from "@/components/Toast";
 
 export default function ChatList() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function ChatList() {
         setChats(data);
       } catch (error) {
         console.error("Error fetching chats:", error);
+        useToastStore.getState().showToast("Failed to fetch chats", "error");
       } finally {
         setLoading(false);
       }

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useChatListStore } from '@/store/useChatListStore';
 import { useUserStore } from '@/store/useUserStore';
+import { useToastStore } from '@/components/Toast';
 import MessageInput from './MessageInput';
 import MessageBox from './MessageBox'
 import { useMessages } from '@/hooks/handleMessages';
@@ -69,7 +70,10 @@ export default function ChatInterface({
       }
     } catch (error) {
       console.error('Error:', error);
-      // Handle error (show toast/notification)
+      useToastStore.getState().showToast(
+        'Failed to send message',
+        'error'
+      );
     }
   };
 

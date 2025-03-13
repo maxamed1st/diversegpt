@@ -1,9 +1,10 @@
 'use client';
 
 import { Message } from '@/types/general';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { usePersonasStore } from '@/store/usePersonasStore';
+import { useToastStore } from '@/components/Toast';
 
 interface MessageBoxProps {
   messages: Message[];
@@ -53,11 +54,17 @@ export default function MessageBox({
     });
   };
 
+  useEffect(() => {
+    if (error) {
+      useToastStore.getState().showToast(
+        'Failed to load messages. Please try again.',
+        'error'
+      );
+    }
+  }, [error]);
+
   return (
     <div className="flex-1 overflow-y-auto p-4">
-      {error && (
-        <div className="text-red-500 text-center mb-4">{error}</div>
-      )}
       {hasMore && (
         <button 
           onClick={onLoadMoreAction} 

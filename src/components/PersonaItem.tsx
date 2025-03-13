@@ -2,6 +2,7 @@ import { Persona } from "@/types/general";
 import { usePersonasStore } from "@/store/usePersonasStore";
 import { Pencil, X } from "lucide-react";
 import { useState } from "react";
+import { useToastStore } from "@/components/Toast";
 
 export default function PersonaItem({ persona }: { persona: Persona }) {
   const [editPersona, setEditPersona] = useState(false);
@@ -42,6 +43,10 @@ export default function PersonaItem({ persona }: { persona: Persona }) {
       setEditPersona(false);
     } catch (error) {
       console.error('Failed to update persona:', error);
+      useToastStore.getState().showToast(
+        'Failed to update persona. Please try again.',
+        'error'
+      );
     } finally {
       setIsLoading(false);
     }

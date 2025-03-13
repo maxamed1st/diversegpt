@@ -6,6 +6,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { Menu, X, CreditCard, Settings, LogOut } from "lucide-react";
 import ChatList from "./Chatlist";
+import { useToastStore } from "@/components/Toast";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -54,6 +55,7 @@ export default function Sidebar() {
       }
     } catch (error) {
       console.error("Error accessing customer portal:", error);
+      useToastStore.getState().showToast("Error accessing customer portal", "error");
     } finally {
       setIsLoading(false);
     }

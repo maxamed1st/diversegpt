@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useSession, signOut } from "next-auth/react"
 import { deleteUser } from "@/utils/deleteUser"
 import { AlertTriangle } from "lucide-react"
+import { useToastStore } from "@/components/Toast"
 
 export default function DeleteAccount() {
   const { data: session } = useSession();
@@ -15,6 +16,10 @@ export default function DeleteAccount() {
       signOut();
     } catch (error) {
       console.error('Failed to delete account:', error);
+      useToastStore.getState().showToast(
+        'Failed to delete account. Please try again.',
+        'error'
+      );
     }
   };
 
