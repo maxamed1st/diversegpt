@@ -35,6 +35,7 @@ export default async function generateResponses({
       const result = await generateText({
         model: anthropic('claude-3-5-sonnet-latest'),
         system: persona.systemPrompt,
+        maxTokens: 1600,
         prompt: context + "\n\n" + `role: user\ncontent: ${userMessage}\n\nrole: ${persona.name}\ncontent: `,
       })
       const [savedMessage] = await createMessage({
