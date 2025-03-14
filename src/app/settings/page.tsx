@@ -29,6 +29,21 @@ export default function Settings() {
         <div className="space-y-8">
           <PersonasManager />
           <DeleteAccount />
+          <div className="pt-6 border-t border-base-content/10">
+            <h2 className="text-xl font-semibold mb-2">Feedback & Support</h2>
+            <p className="text-base-content/70 mb-2">
+              We value your feedback and are here to help with any questions.
+            </p>
+            <p className="text-base-content/70">
+              Contact us at:{" "}
+              <a 
+                href="mailto:diversegpt@wepco.se" 
+                className="text-primary hover:text-primary/80 underline"
+              >
+                diversegpt@wepco.se
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
