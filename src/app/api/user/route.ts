@@ -2,7 +2,9 @@ import { db } from "@/db";
 import { eq } from "drizzle-orm";
 import { users, accounts } from "@/db/schema";
 import { NextResponse } from "next/server";
-import { stripe } from "../manage_payment/route";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function DELETE(request: Request) {
   try {
