@@ -9,7 +9,7 @@ export default async function ChatPage({ params }: { params: Promise<{ slug: str
   const session = await auth();
   const userId = session?.user?.id;
   if (!userId) {
-    redirect("/login");
+    redirect("/api/auth/signin");
   }
 
   const slug = (await params).slug;

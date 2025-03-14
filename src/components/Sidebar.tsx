@@ -33,7 +33,10 @@ export default function Sidebar() {
       </Link>
 
       <button
-        onClick={() => signOut()}
+        onClick={async () => {
+          signOut({ redirect: false });
+          router.push("/");
+        }}
         className="flex items-center gap-3 px-4 py-2 rounded-lg bg-error text-error-content hover:bg-error/80 transition"
       >
         <LogOut className="w-5 h-5" />
