@@ -8,6 +8,7 @@ import Discord from "next-auth/providers/discord"
 import defaultPersonas from "@/utils/defaultPersonas"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   adapter: DrizzleAdapter(db, {
     usersTable: users,
     accountsTable: accounts,
