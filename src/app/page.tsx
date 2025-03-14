@@ -61,41 +61,46 @@ export default function Home() {
         </div>
 
         {/* Advanced Features */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <div className="p-8 rounded-xl bg-base-200 border border-base-300">
-            <h3 className="text-2xl font-semibold mb-4">Collaborative Intelligence</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span>Group discussions with multiple AI personas</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span>Cross-domain problem solving</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span>Dynamic conversation flow between personas</span>
-              </li>
-            </ul>
-          </div>
+        <div className="py-24 bg-base-200/30 -mx-4 px-4">
+          <div className="container mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-12">Advanced Capabilities</h2>
+            <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+              <div className="p-8 rounded-xl bg-base-100 border border-base-300 shadow-lg">
+                <h3 className="text-2xl font-semibold mb-6 text-primary">Collaborative Intelligence</h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start gap-3">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary">•</span>
+                    <span className="text-lg">Group discussions with multiple AI personas</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary">•</span>
+                    <span className="text-lg">Cross-domain problem solving</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary">•</span>
+                    <span className="text-lg">Dynamic conversation flow between personas</span>
+                  </li>
+                </ul>
+              </div>
 
-          <div className="p-8 rounded-xl bg-base-200 border border-base-300">
-            <h3 className="text-2xl font-semibold mb-4">Persona Management</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span>Save and reuse custom personas</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span>Fine-tune personality attributes</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span>Share personas with team members</span>
-              </li>
-            </ul>
+              <div className="p-8 rounded-xl bg-base-100 border border-base-300 shadow-lg">
+                <h3 className="text-2xl font-semibold mb-6 text-primary">Persona Management</h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start gap-3">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary">•</span>
+                    <span className="text-lg">Save and reuse custom personas</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary">•</span>
+                    <span className="text-lg">Fine-tune personality attributes</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary">•</span>
+                    <span className="text-lg">Share personas with team members</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
