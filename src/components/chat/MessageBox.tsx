@@ -1,7 +1,7 @@
 'use client';
 
 import { Message } from '@/types/general';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { usePersonasStore } from '@/store/usePersonasStore';
 import { useToastStore } from '@/components/Toast';
@@ -40,7 +40,16 @@ export default function MessageBox({
   isLoading,
   error 
 }: MessageBoxProps) {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [collapsedMessages, setCollapsedMessages] = useState<Set<string>>(new Set());
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const toggleCollapse = (messageId: string) => {
     setCollapsedMessages(prev => {
@@ -120,6 +129,7 @@ export default function MessageBox({
               </div>
             );
           })}
+          <div ref={messagesEndRef} />
         </div>
       )}
     </div>
