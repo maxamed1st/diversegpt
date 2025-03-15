@@ -44,13 +44,20 @@ export default function MessageBox({
 }: MessageBoxProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [collapsedMessages, setCollapsedMessages] = useState<Set<string>>(new Set());
+  const [oldestMessage, setOldestMessage] = useState(messages[0]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
-    scrollToBottom();
+    if (oldestMessage !== messages[0]) {
+      if (oldestMessage === undefined) {
+        setOldestMessage(messages[0]);
+      }
+      else return
+    }
+      scrollToBottom();
   }, [messages]);
 
   const toggleCollapse = (messageId: string) => {

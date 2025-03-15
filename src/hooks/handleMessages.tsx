@@ -83,10 +83,14 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
   const loadMoreMessages = useCallback(async () => {
     if (!hasMore || isLoading) return;
 
+    setIsLoading(true);
+
     const newOffset = pagination.offset + pagination.limit;
     setPagination(prev => ({ ...prev, offset: newOffset }));
     
     await fetchMessages(newOffset, pagination.limit);
+
+    setIsLoading(false);
   }, [fetchMessages, hasMore, isLoading, pagination.limit, pagination.offset, sortMessages]);
 
   // Send message
