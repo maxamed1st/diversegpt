@@ -5,6 +5,8 @@ import { useState, useEffect, useRef } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { usePersonasStore } from '@/store/usePersonasStore';
 import { useToastStore } from '@/components/Toast';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface MessageBoxProps {
   messages: Message[];
@@ -112,10 +114,19 @@ export default function MessageBox({
                         {usePersonasStore.getState().getPersonaName(message.fromPersonaId!)}
                       </div>
                     )}
-                    <div>{isCollapsed 
-                      ? message.content.slice(0, 100) + '...' 
-                      : message.content}
-                    </div>
+                    {isUser ? (
+                      <div>{message.content}</div>
+                    ) : (
+                      <div>
+                        <ReactMarkdown 
+                          remarkPlugins={[remarkGfm]}
+                        >
+                          {isCollapsed 
+                            ? message.content.slice(0, 100) + '...' 
+                            : message.content}
+                        </ReactMarkdown>
+                      </div>
+                    )}
                   </div>
                   {!isUser && message.content.length > 104 && (
                     <div className="flex-shrink-0 mt-1">
