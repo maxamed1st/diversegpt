@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { Message } from '@/types/general';
+import { sortMessages, createOptimisticUserMessage, createLoadingMessage } from '@/utils/messageUtils';
 
 interface UseMessagesProps {
   chatId: string;
@@ -34,13 +35,6 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
     limit: 24,
   });
 
-  // Helper function to sort messages
-  const sortMessages = useCallback((msgs: Message[]) => {
-    return [...msgs].sort((a, b) => 
-      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    );
-  }, []);
-
   // Fetch messages
   const fetchMessages = useCallback(async (offset: number, limit: number) => {
     try {
@@ -69,7 +63,7 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
       setError(err instanceof Error ? err.message : 'Failed to load messages');
       throw err;
     }
-  }, [chatId]);
+  }, [chatId, sortMessages]);
 
   // Initial load
   useEffect(() => {
@@ -93,7 +87,7 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
     setPagination(prev => ({ ...prev, offset: newOffset }));
     
     await fetchMessages(newOffset, pagination.limit);
-  }, [fetchMessages, hasMore, isLoading, pagination.limit, pagination.offset]);
+  }, [fetchMessages, hasMore, isLoading, pagination.limit, pagination.offset, sortMessages]);
 
   // Send message
   const sendMessage = useCallback(async (content: string, overrideChatId?: string) => {
@@ -102,23 +96,8 @@ export function useMessages({ chatId, initialMessages = [] }: UseMessagesProps):
       setError(null);
 
       // Add user message
-      const userMessage: Message = {
-        id: crypto.randomUUID(),
-        content,
-        chatId,
-        fromUserId: undefined,
-        fromPersonaId: undefined,
-        createdAt: new Date(),
-      };
-
-      const loadingIndicator: Message = {
-        id: crypto.randomUUID(),
-        content: 'loading...',
-        chatId,
-        fromUserId: undefined,
-        fromPersonaId: 'loading-indicator',
-        createdAt: new Date(),
-      };
+      const userMessage = createOptimisticUserMessage(content, chatId);
+      const loadingIndicator = createLoadingMessage(chatId);
 
       // Optimistically add user message
       setMessages(prev => sortMessages([...prev, userMessage, loadingIndicator]));

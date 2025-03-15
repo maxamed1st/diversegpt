@@ -1,13 +1,15 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useChatListStore } from '@/store/useChatListStore';
 import { useUserStore } from '@/store/useUserStore';
 import { useToastStore } from '@/components/Toast';
 import MessageInput from './MessageInput';
 import MessageBox from './MessageBox'
 import { useMessages } from '@/hooks/handleMessages';
-import { Chat } from "@/types/general";
+import { Chat, Message } from "@/types/general";
+import { createOptimisticUserMessage, createLoadingMessage } from '@/utils/messageUtils';
 
 interface ChatInterfaceProps {
   chatId: string | null;
@@ -22,6 +24,8 @@ export default function ChatInterface({
 }: ChatInterfaceProps) {
   const router = useRouter();
   const { addChat } = useChatListStore();
+  const [localMessages, setLocalMessages] = useState<Message[]>([]);
+  const [isCreatingChat, setIsCreatingChat] = useState(false);
   
   const { 
     messages, 
@@ -36,17 +40,28 @@ export default function ChatInterface({
     initialMessages: []
   });
 
+  const displayMessages = isNewChat ? localMessages : messages;
+  const isProcessing = isSending || isCreatingChat;
+
   const handleMessageSubmit = async (message: string) => {
-    if (isSending) return;
+    if (isProcessing) return;
 
     try {
       if (isNewChat) {
+        setIsCreatingChat(true);
+        
+        // Show optimistic updates immediately
+        const tempChatId = 'temp-' + crypto.randomUUID();
+        const userMessage = createOptimisticUserMessage(message, tempChatId);
+        const loadingMessage = createLoadingMessage(tempChatId);
+        setLocalMessages([userMessage, loadingMessage]);
+
         // Create new chat
         const createChat = await fetch('/api/chats', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
-            message, // Used for chat name generation
+            message,
             personaIds: initialPersonas?.map(p => p.id) || []
           }),
         });
@@ -56,8 +71,6 @@ export default function ChatInterface({
         }
 
         const { chat }: { chat: Chat } = await createChat.json();
-        
-        // Add to store
         addChat(chat);
 
         // Send the initial message
@@ -83,20 +96,20 @@ export default function ChatInterface({
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Messages area - takes up most of the space */}
         <div className="flex-1 overflow-auto">
-          <MessageBox
-            messages={messages}
-            hasMore={hasMore}
-            onLoadMoreAction={loadMoreMessages}
-            isLoading={isLoading}
-            error={error}
-          />
+        <MessageBox
+          messages={displayMessages}
+          hasMore={!isNewChat && hasMore}
+          onLoadMoreAction={loadMoreMessages}
+          isLoading={isLoading}
+          error={error}
+        />
         </div>
 
         {/* Message input - fixed at bottom */}
         <div className="flex-shrink-0 p-4">
           <MessageInput 
             action={handleMessageSubmit}
-            disabled={isSending || isLoading}
+          disabled={isProcessing || isLoading}
             subscriptionStatus={useUserStore().user?.subscriptionStatus}
           />
         </div>
