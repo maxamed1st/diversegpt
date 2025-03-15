@@ -8,7 +8,6 @@ import { eq } from 'drizzle-orm';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 async function updateUserSubscription(subscription: Stripe.Subscription) {
-  console.log("updateUserSubscription", subscription)
   const stripeCustomerId = subscription.customer as string;
   
   await db.update(users)
@@ -45,8 +44,6 @@ export async function POST(req: Request) {
       case 'customer.subscription.deleted':
         await updateUserSubscription(subscription);
         break;
-      default:
-        console.log(`Unhandled event type ${event.type}`);
     }
 
     return NextResponse.json({ received: true });
