@@ -1,6 +1,6 @@
 import { createMessage, getChatMessages, getChatPersonas } from "@/db/queries/chatQueries"
-import { generateText } from "ai"
-import { anthropic } from "@ai-sdk/anthropic"
+import { generateText, LanguageModel } from "ai"
+import { openai } from "@ai-sdk/openai"
 
 export default async function generateResponses({
   chatId,
@@ -33,9 +33,9 @@ export default async function generateResponses({
   try {
     const responses = await Promise.all(chatPersonas.map(async (persona) => {
       const result = await generateText({
-        model: anthropic('claude-3-5-sonnet-latest'),
+        model: openai('gpt-4o-mini') as LanguageModel,
         system: persona.systemPrompt,
-        maxTokens: 1600,
+        maxTokens: 1200,
         prompt: context + "\n\n" + `role: user\ncontent: ${userMessage}\n\nrole: ${persona.name}\ncontent: `,
       })
       const [savedMessage] = await createMessage({

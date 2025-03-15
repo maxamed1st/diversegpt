@@ -1,5 +1,5 @@
-import { generateText } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
+import { generateText, LanguageModel } from "ai";
+import { openai } from "@ai-sdk/openai";
 
 export default async function generateTitleFromUserMessage({
   message,
@@ -7,7 +7,7 @@ export default async function generateTitleFromUserMessage({
   message: string;
 }) {
   const { text: title } = await generateText({
-    model: anthropic('claude-3-5-sonnet-latest'),
+    model: openai('gpt-4o-mini') as LanguageModel,
     system: `\n
     - you will generate a short title based on the first message a user begins a conversation with
     - ensure it is not more than 80 characters long
