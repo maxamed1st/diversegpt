@@ -24,7 +24,7 @@ const MessageSkeleton = () => (
           <div className="h-4 bg-base-100/50 rounded w-[150px] mt-2" />
         </div>
       </div>
-    {[...Array(5)].map((_, i) => (
+    {[...Array(4)].map((_, i) => (
       <div key={i} className="flex justify-start">
         <div className="max-w-[80%] p-3 rounded-lg bg-base-300 animate-pulse">
           <div className="h-4 bg-base-100/50 rounded w-[200px]" />
