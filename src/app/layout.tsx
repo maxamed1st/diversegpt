@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FocusGPT",
-  description: "Test your ideas with AI focus group",
+  title: "DiverseGPT",
+  description: "Chat with multiple AI personas simultaneously",
 };
 
 export default function RootLayout({
