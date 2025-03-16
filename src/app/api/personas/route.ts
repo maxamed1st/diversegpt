@@ -3,6 +3,7 @@ import { personas } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { auth } from '@/../auth';
 
 // Validation schemas
 const updatePersonaSchema = z.object({
@@ -14,6 +15,11 @@ const updatePersonaSchema = z.object({
 
 export async function PATCH(req: Request) {
   try {
+    const session = await auth();
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+    }
+
     const body = await req.json();
     const result = updatePersonaSchema.safeParse(body);
     if (!result.success) {
