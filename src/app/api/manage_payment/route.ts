@@ -52,6 +52,16 @@ export async function GET() {
         cancel_url: `${process.env.BASE_URL}/settings`,
         subscription_data: {
           trial_period_days: 1
+        },
+        automatic_tax: {
+          enabled: true
+        },
+        tax_id_collection: {
+          enabled: true
+        },
+        customer_update: {
+          address: "auto",
+          name: "auto"
         }
       })
       return NextResponse.json({
