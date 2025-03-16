@@ -170,6 +170,15 @@ export default function Home() {
         <p className="text-base-content/70">
           © 2025 DiverseGPT. All rights reserved.
         </p>
+        <div className="mt-4 space-x-4">
+          <Link href="/terms" className="text-base-content/70 hover:text-primary transition-colors">
+            Terms of Service
+          </Link>
+          <span className="text-base-content/70">•</span>
+          <Link href="/privacy" className="text-base-content/70 hover:text-primary transition-colors">
+            Privacy Policy
+          </Link>
+        </div>
       </footer>
     </div>
   );
