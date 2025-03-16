@@ -164,6 +164,13 @@ export default function Home() {
           </Link>
         </div>
       </div>
+
+      {/* Footer Section */}
+      <footer className="container mx-auto px-4 py-8 text-center border-t border-base-300">
+        <p className="text-base-content/70">
+          © 2025 DiverseGPT. All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 }
