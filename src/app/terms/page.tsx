@@ -4,8 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 export const metadata = {
-  title: 'Terms of Service - FocusGPT',
-  description: 'Terms of Service and usage conditions for FocusGPT',
+  title: 'Terms of Service - DiverseGPT',
+  description: 'Terms of Service and usage conditions for DiverseGPT',
 };
 
 async function getTermsContent() {

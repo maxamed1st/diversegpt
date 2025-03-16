@@ -4,8 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 export const metadata = {
-  title: 'Privacy Policy - FocusGPT',
-  description: 'Privacy Policy and data handling practices for FocusGPT',
+  title: 'Privacy Policy - DiverseGPT',
+  description: 'Privacy Policy and data handling practices for DiverseGPT',
 };
 
 async function getPrivacyContent() {
