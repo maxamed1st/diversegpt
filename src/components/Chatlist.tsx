@@ -5,7 +5,7 @@ import { useChatListStore } from "@/store/useChatListStore"
 import { Chat } from "@/types/general";
 import { useToastStore } from "@/components/Toast";
 
-export default function ChatList() {
+export default function ChatList({ setIsOpen }: { setIsOpen: (isOpen: boolean) => void }) {
   const router = useRouter();
   const { chats, setChats } = useChatListStore();
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,10 @@ export default function ChatList() {
     <div className="p-12 flex-1 overflow-y-auto flex flex-col space-y-4">
       <button
         className="flex items-center gap-3 px-4 py-2 rounded-lg bg-primary text-primary-content hover:bg-primary/80 transition"
-        onClick={() => router.push("/chat/new")}
+        onClick={() => {
+          router.push("/chat/new")
+          setIsOpen(false) 
+          }}
       >
         <Plus className="w-5 h-5" />
         New Chat
@@ -50,7 +53,10 @@ export default function ChatList() {
           <button
             key={chat.id}
             className="flex items-center gap-3 px-4 py-2 bg-base-200 hover:bg-base-300 transition rounded"
-            onClick={() => router.push(`/chat/${chat.id}`)}
+            onClick={() => {
+                router.push(`/chat/${chat.id}`)
+                setIsOpen(false)
+                }}
           >
             {chat.name}
           </button>

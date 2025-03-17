@@ -27,6 +27,7 @@ export default function Sidebar() {
       <Link
         href="/settings"
         className="flex items-center gap-3 px-4 py-2 rounded-lg bg-base-200 hover:bg-base-300 transition"
+        onClick={() => setIsOpen(false)}
       >
         <Settings className="w-5 h-5" />
         Settings
@@ -78,7 +79,14 @@ export default function Sidebar() {
 
       {/* Overlay + Sidebar Container */}
       {isOpen && (
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsOpen(false)}>
+        <div 
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          onClick={(e) => {
+            if (!isLoading && e.target === e.currentTarget) {
+              setIsOpen(false);
+            }
+          }}
+        >
           <div
             className="absolute top-0 left-0 h-full w-96 bg-base-100 shadow-lg transition-transform"
           >
@@ -89,7 +97,7 @@ export default function Sidebar() {
 
             {/* Sidebar Content */}
             <div className="flex flex-col h-full">
-              <ChatList />
+              <ChatList setIsOpen={setIsOpen} />
               {menuContent}
             </div>
           </div>
