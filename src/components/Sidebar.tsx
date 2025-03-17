@@ -88,7 +88,7 @@ export default function Sidebar() {
           }}
         >
           <div
-            className="absolute top-0 left-0 h-full w-96 bg-base-100 shadow-lg transition-transform"
+            className="absolute top-0 left-0 h-full max-w-96 bg-base-100 shadow-lg transition-transform"
           >
             {/* Close Button */}
             <button className="absolute top-4 right-4" onClick={() => setIsOpen(false)}>
