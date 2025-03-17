@@ -47,7 +47,7 @@ export default function Home() {
             <Brain className="w-12 h-12 text-secondary mb-4" />
             <h3 className="text-xl font-semibold mb-2">Customizable Identities</h3>
             <p className="text-base-content/70">
-              Create and customize AI personas with specific expertise, personality traits, and knowledge domains. From experts to creative partners.
+              Customize AI personas with specific expertise, personality traits, and knowledge domains. From experts to creative partners.
             </p>
           </div>
 
@@ -88,15 +88,15 @@ export default function Home() {
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3">
                     <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary">•</span>
-                    <span className="text-lg">Save and reuse custom personas</span>
+                    <span className="text-lg">Unfiltered Access to your persona’s internals</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary">•</span>
-                    <span className="text-lg">Fine-tune personality attributes</span>
+                    <span className="text-lg">Shape personas identity with fine-grained control</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary">•</span>
-                    <span className="text-lg">Share personas with team members</span>
+                    <span className="text-lg">Fine-tune every detail to match your exact needs</span>
                   </li>
                 </ul>
               </div>
