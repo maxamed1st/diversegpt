@@ -9,17 +9,21 @@ import { useToastStore } from "@/components/Toast"
 export default function DeleteAccount() {
   const { data: session } = useSession();
   const [showConfirm, setShowConfirm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
     try {
+      setIsDeleting(true);
       await deleteUser(session?.user?.id as string);
-      signOut();
+      await signOut();
     } catch (error) {
       console.error('Failed to delete account:', error);
       useToastStore.getState().showToast(
         'Failed to delete account. Please try again.',
         'error'
       );
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -53,7 +57,7 @@ export default function DeleteAccount() {
                   onClick={handleDelete}
                   className="px-4 py-2 text-sm font-medium text-error rounded-md hover:bg-error hover:text-error-content transition-colors"
                 >
-                  Yes, delete my account
+                  {isDeleting ? 'Deleting...' : 'Yes, delete my account'}
                 </button>
                 <button
                   onClick={() => setShowConfirm(false)}
