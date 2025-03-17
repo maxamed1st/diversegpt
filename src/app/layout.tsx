@@ -16,8 +16,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DiverseGPT",
-  description: "Chat with multiple AI personas simultaneously",
+  title: "DiverseGPT - Multi-Persona AI Chat Platform",
+  description: "Chat with multiple customizable AI personas simultaneously. Control their identities, behaviors, and perspectives for rich, diverse conversations.",
+  keywords: "AI chat, multiple personas, chatbot customization, artificial intelligence, conversational AI, AI personality, chat assistant",
+  authors: [{ name: "DiverseGPT" }],
+  openGraph: {
+    title: "DiverseGPT - Multi-Persona AI Chat Platform",
+    description: "Chat with multiple customizable AI personas simultaneously. Control their identities, behaviors, and perspectives for rich, diverse conversations.",
+    type: "website",
+    siteName: "DiverseGPT",
+    locale: "sv_SE",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DiverseGPT - Multi-Persona AI Chat Platform",
+    description: "Chat with multiple customizable AI personas simultaneously. Control their identities, behaviors, and perspectives for rich, diverse conversations.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "hsl(0, 0%, 13%)",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
