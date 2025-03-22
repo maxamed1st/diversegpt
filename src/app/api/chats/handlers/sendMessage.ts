@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { auth } from "@/../auth";
+import checkAuth from "@/utils/checkAuth";
 import generateChatResponses from "@/lib/generateResponses";
 import { db } from "@/db";
 
@@ -25,8 +25,7 @@ export default async function(
   }
 
   const { message } = result.data;
-  const session = await auth();
-  const userId = session?.user?.id
+  const { userId } = await checkAuth();
 
   if (!userId) {
     console.error("Authentication required");

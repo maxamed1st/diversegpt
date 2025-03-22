@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { auth } from '@/../auth';
+import checkAuth from '@/utils/checkAuth';
 import { db } from '@/db';
 import { users } from '@/db/schema';
 import { eq } from 'drizzle-orm';
@@ -9,12 +9,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function GET() {
   try {
-    const session = await auth();
-    if (!session?.user?.email) {
+    const { email } = await checkAuth();
+    if (!email) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const user = (await db.select().from(users).where(eq(users.email, session.user.email))).at(0);
+    const user = (await db.select().from(users).where(eq(users.email, email))).at(0);
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }

@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/../auth";
+import checkAuth from "@/utils/checkAuth";
 import { getAllChats } from "@/db/queries/chatQueries";
 
 export default async function() {
-  const session = await auth();
-  const userId = session?.user?.id
+  const { userId } = await checkAuth();
 
   if (!userId) {
     return NextResponse.json(

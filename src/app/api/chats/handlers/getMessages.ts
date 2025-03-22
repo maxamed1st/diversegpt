@@ -3,7 +3,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { eq, count } from "drizzle-orm";
 import { message } from "@/db/schema";
-import { auth } from "@/../auth";
+import checkAuth from "@/utils/checkAuth";
 import { getChatMessages } from "@/db/queries/chatQueries";
 
 
@@ -29,8 +29,7 @@ export default async function(
 ) {
   try {
     // Check authentication
-    const session = await auth();
-    const userId = session?.user?.id
+    const { userId } = await checkAuth();
 
     if (!userId) {
       return NextResponse.json(

@@ -3,15 +3,14 @@ import { eq } from "drizzle-orm";
 import { users, accounts } from "@/db/schema";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { auth } from '@/../auth';
+import checkAuth from "@/utils/checkAuth";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function DELETE(request: Request) {
   try {
     const { userId } = await request.json();
-    const session = await auth();
-    const authenticatedUserId = session?.user?.id;
+    const { userId: authenticatedUserId } = await checkAuth();
 
     if (!authenticatedUserId) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });

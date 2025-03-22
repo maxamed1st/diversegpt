@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { auth } from "@/../auth";
+import checkAuth from "@/utils/checkAuth";
 import { createChat } from "@/db/queries/chatQueries";
 import generateTitleFromUserMessage from "@/utils/generateName";
 
@@ -21,8 +21,7 @@ export default async function(request: Request) {
   }
 
   const { personaIds, message } = result.data;
-  const session = await auth();
-  const userId = session?.user?.id;
+  const { userId } = await checkAuth();
 
   if (!userId) {
     return NextResponse.json(
