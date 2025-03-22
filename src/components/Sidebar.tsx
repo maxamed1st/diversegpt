@@ -21,7 +21,7 @@ export default function Sidebar() {
         className="flex items-center gap-3 px-4 py-2 rounded-lg bg-primary text-primary-content hover:bg-primary/80 transition disabled:opacity-50"
       >
         <CreditCard className="w-5 h-5" />
-        {isLoading ? "Loading..." : "Manage Payment"}
+        {isLoading ? "Loading..." : "Manage Subscription"}
       </button>
 
       <Link
@@ -49,7 +49,7 @@ export default function Sidebar() {
   async function handleManagePayment() {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/manage_payment");
+      const response = await fetch("/api/stripe/manage_subscription");
       const data = await response.json();
 
       if (response.ok && data.url) {
