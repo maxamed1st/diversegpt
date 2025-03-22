@@ -14,22 +14,20 @@ export default function MessageInput({
 }) {
   const [message, setMessage] = useState("");
 
-  const isNewUser = subscriptionStatus === "inactive";
-  const isSubscriptionInactive = subscriptionStatus !== 'active' && subscriptionStatus !== 'trialing';
+  const isSubscriptionActive = subscriptionStatus === 'active' || subscriptionStatus === 'trialing';
 
   return (
     <div className="w-full h-24 flex">
       <textarea
           className="w-full resize-none min-h-[3em] text-base-content/95 bg-base-100 border border-base-300 rounded-md px-3 py-2 text-sm focus:ring-0 outline-none"
           name="message"
-          placeholder= {isNewUser ? "set up payment method in the menu to start your trial period" :
-          isSubscriptionInactive ? "You need to set up subscription to chat" : "type a message..."}
-          disabled={isSubscriptionInactive}
+          placeholder= {isSubscriptionActive ? "type a message..." : "Subscribe to start chatting with multiple AI personas!"}
+          disabled={!isSubscriptionActive}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault();
-              if (message.trim() && !disabled && !isSubscriptionInactive) {
+              if (message.trim() && !disabled && isSubscriptionActive) {
                 action(message);
                 setMessage("");
               }
@@ -46,7 +44,7 @@ export default function MessageInput({
           action(message);
           setMessage("");
         }}
-        disabled={disabled || isSubscriptionInactive}
+        disabled={disabled || !isSubscriptionActive}
       >
         <ArrowUp className={disabled ? "opacity-50" : ""} />
       </button>
