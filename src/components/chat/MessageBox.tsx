@@ -96,6 +96,8 @@ export default function MessageBox({
       )}
       {isLoading && messages.length === 0 ? (
         <MessageSkeleton />
+      ) : !isLoading && messages.length === 0 ? (
+        <div className="text-2xl text-center pt-5"> How can we help? </div>
       ) : (
         <div className="space-y-4">
           {messages.map((message) => {
