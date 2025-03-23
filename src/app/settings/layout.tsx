@@ -8,7 +8,7 @@ export default function SettingsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex gap-4">
+    <main className="flex flex-col h-screen overflow-hidden">
       <Sidebar />
       {children}
     </main>

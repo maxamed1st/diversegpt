@@ -91,11 +91,10 @@ export default function ChatInterface({
   };
 
   return (
-    <div className="flex flex-col h-screen max-h-screen w-full">
+    <div className="flex flex-col w-full h-full overflow-hidden">
       {/* Main chat container */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Messages area - takes up most of the space */}
-        <div className="flex-1 overflow-auto">
+        {/* Messages area - scrollable area */}
+        <div className="flex-1 overflow-y-auto">
         <MessageBox
           messages={displayMessages}
           hasMore={!isNewChat && hasMore}
@@ -109,11 +108,10 @@ export default function ChatInterface({
         <div className="flex-shrink-0 p-4">
           <MessageInput 
             action={handleMessageSubmit}
-          disabled={isProcessing || isLoading}
+            disabled={isProcessing || isLoading}
             subscriptionStatus={useUserStore().user?.subscriptionStatus}
           />
         </div>
-      </div>
     </div>
   );
 }

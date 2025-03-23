@@ -66,9 +66,9 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="h-screen bg-base-100 text-base-content">
+    <aside className="bg-base-100 text-base-content">
       {/* Hamburger Button */}
-      <div className="py-8 px-4">
+      <div className="p-4">
         <button
           className="bg-base-200 p-2 rounded-lg shadow-lg text-base-content/80 hover:text-base-content"
           onClick={() => setIsOpen(true)}
