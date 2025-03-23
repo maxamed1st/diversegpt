@@ -18,7 +18,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="p-4 overflow-auto">
+    <div className="p-4 overflow-auto lg:px-16">
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold mb-1">Settings</h1>
