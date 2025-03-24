@@ -82,7 +82,7 @@ export default function MessageBox({
   }, [error]);
 
   return (
-    <div className="flex-1 overflow-y-auto p-4">
+    <div className={`flex-1 overflow-y-auto p-4 ${!isLoading && messages.length === 0 ? 'flex items-center justify-center' : ''}`}>
       {hasMore && (
         <button 
           onClick={onLoadMoreAction} 
@@ -97,9 +97,9 @@ export default function MessageBox({
       {isLoading && messages.length === 0 ? (
         <MessageSkeleton />
       ) : !isLoading && messages.length === 0 ? (
-        <div className="text-2xl text-center pt-5"> How can we help? </div>
+        <div className="text-2xl text-center text-base-content/70 max-w-full h-auto"> How can we help? </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
           {messages.map((message) => {
             const isUser = !message.fromPersonaId;
             const isCollapsed = !isUser && collapsedMessages.has(message.id);
