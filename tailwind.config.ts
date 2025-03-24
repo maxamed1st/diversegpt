@@ -30,6 +30,9 @@ export default {
         "error": "hsl(0, 100%, 70%)",
         "error-content": "hsl(0, 0%, 4%)"
       },
+      height: {
+        screen: "var(--dvh)"
+      }
     },
   },
   plugins: [],
