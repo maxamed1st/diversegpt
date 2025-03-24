@@ -53,6 +53,17 @@ export async function createPortalSession(customerId: string) {
   }
 }
 
+export async function cancelStripeSubscription(subscriptionId: string) {
+  try {
+    await stripe.subscriptions.update(subscriptionId, {
+      cancel_at_period_end: true,
+    });
+  } catch (error) {
+    console.error(error);
+    throw error
+  }
+}
+
 export async function createStripeCheckoutSession(customerId: string) {
   try {
     const session = await stripe.checkout.sessions.create({

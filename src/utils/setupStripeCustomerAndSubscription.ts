@@ -14,6 +14,8 @@ export default async function setupStripeCustomerAndSubscription(userId: string,
     await db.update(users)
           .set({subscriptionId: subscription.id, subscriptionStatus: subscription.status })
           .where(eq(users.id, userId));
+
+    return subscription.id;
   } catch (error) {
     console.error('Error setting up Stripe customer and subscription:', error);
   }
