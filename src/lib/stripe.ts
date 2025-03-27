@@ -64,7 +64,7 @@ export async function cancelStripeSubscription(subscriptionId: string) {
   }
 }
 
-export async function createStripeCheckoutSession(customerId: string) {
+export async function createStripeCheckoutSession( customerId: string, trialdays?: number ) {
   try {
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
@@ -78,7 +78,7 @@ export async function createStripeCheckoutSession(customerId: string) {
       success_url: `${process.env.BASE_URL}/chat/new`,
       cancel_url: `${process.env.BASE_URL}/settings`,
       subscription_data: {
-        trial_period_days: 3
+        trial_period_days: trialdays
       },
       automatic_tax: {
         enabled: true

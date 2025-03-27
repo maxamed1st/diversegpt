@@ -16,21 +16,23 @@ export default async function() {
       where: eq(users.email, email),
       columns: {
         stripeCustomerId: true,
-        subscriptionId: true
+        subscriptionId: true,
+        subscriptionStatus: true
       },
     });
 
     if (!result?.stripeCustomerId) {
       // Create a new customer and checkout session
       const customer = await createStripeCustomer(email, userId);
-      const checkoutUrl = await createStripeCheckoutSession(customer.id);
+      const checkoutUrl = await createStripeCheckoutSession(customer.id, 3);
 
       return NextResponse.json({ url: checkoutUrl });
     }
 
     if (!result.subscriptionId) {
       // Create a checkout session for customers without a subscription
-      const checkoutUrl = await createStripeCheckoutSession(result.stripeCustomerId);
+      const trialday = result.subscriptionStatus === 'inactive' ? 3 : undefined
+      const checkoutUrl = await createStripeCheckoutSession(result.stripeCustomerId, trialday);
 
       return NextResponse.json({ url: checkoutUrl });
     }
