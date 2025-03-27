@@ -8,11 +8,12 @@ import { useToastStore } from "@/components/Toast";
 export default function ChatList({ setIsOpen }: { setIsOpen: (isOpen: boolean) => void }) {
   const router = useRouter();
   const { chats, setChats } = useChatListStore();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchChats() {
       try {
+        setLoading(true);
         const response = await fetch("/api/chats");
         const { chats: data }: { chats: Chat[] } = await response.json();
         setChats(data);
@@ -23,7 +24,7 @@ export default function ChatList({ setIsOpen }: { setIsOpen: (isOpen: boolean) =
         setLoading(false);
       }
     }
-    fetchChats();
+    if (chats.length === 0) fetchChats();
   }, []);
 
   return (
