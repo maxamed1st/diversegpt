@@ -12,14 +12,15 @@ export default async function() {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const stripeCustomerId = (await db.query.users.findFirst({
+    const result = await db.query.users.findFirst({
       where: eq(users.email, email),
       columns: {
         stripeCustomerId: true,
+        subscriptionId: true
       },
-    }))?.stripeCustomerId;
+    });
 
-    if (!stripeCustomerId) {
+    if (!result?.stripeCustomerId) {
       // Create a new customer and checkout session
       const customer = await createStripeCustomer(email, userId);
       const checkoutUrl = await createStripeCheckoutSession(customer.id);
@@ -27,8 +28,15 @@ export default async function() {
       return NextResponse.json({ url: checkoutUrl });
     }
 
+    if (!result.subscriptionId) {
+      // Create a checkout session for customers without a subscription
+      const checkoutUrl = await createStripeCheckoutSession(result.stripeCustomerId);
+
+      return NextResponse.json({ url: checkoutUrl });
+    }
+
     // Create a billing portal session for existing customers
-    const portalUrl = await createPortalSession(stripeCustomerId);
+    const portalUrl = await createPortalSession(result.stripeCustomerId);
 
     return NextResponse.json({ url: portalUrl });
   } catch (error: any) {
