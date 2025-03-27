@@ -4,12 +4,13 @@ import DeleteAccount from "@/components/DeleteAccount";
 import PersonasManager from "@/components/PersonasManager";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Loading from "../Loading";
 
 export default function Settings() {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (!session?.user) {
