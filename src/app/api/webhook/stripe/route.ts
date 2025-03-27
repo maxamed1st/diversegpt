@@ -7,13 +7,13 @@ import { eq } from 'drizzle-orm';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-async function updateUserSubscription(subscription: Stripe.Subscription) {
+async function updateUserSubscription(eventType: string, subscription: Stripe.Subscription) {
   const stripeCustomerId = subscription.customer as string;
   
   await db.update(users)
     .set({ 
       subscriptionStatus: subscription.status,
-      subscriptionId: subscription.id
+      subscriptionId: eventType === 'customer.subscription.deleted' ? null : subscription.id
     })
     .where(eq(users.stripeCustomerId, stripeCustomerId));
 }
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
       case 'customer.subscription.created':
       case 'customer.subscription.updated':
       case 'customer.subscription.deleted':
-        await updateUserSubscription(subscription);
+        await updateUserSubscription(event.type, subscription);
         break;
     }
 
