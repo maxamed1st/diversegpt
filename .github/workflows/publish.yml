@@ -1,4 +1,4 @@
-name: build and publish docker image
+name: build, publish and deploy
 on:
   push:
     branches:
@@ -28,3 +28,16 @@ jobs:
           cache-to: type=inline
           build-args: |
             STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: update website
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: update ${{ github.event.repository.name }}
