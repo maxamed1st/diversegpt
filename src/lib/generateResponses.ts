@@ -33,7 +33,7 @@ export default async function generateResponses({
   try {
     const responses = await Promise.all(chatPersonas.map(async (persona) => {
       const result = await generateText({
-        model: openai('gpt-4o-mini') as LanguageModel,
+        model: openai('gpt-4o') as LanguageModel,
         system: persona.systemPrompt,
         maxTokens: 800,
         prompt: context + "\n\n" + `role: user\ncontent: ${userMessage}\n\nrole: ${persona.name}\ncontent: `,
