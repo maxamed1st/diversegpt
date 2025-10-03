@@ -3,7 +3,7 @@ import { personas } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import checkAuth from "@/utils/checkAuth";
+import checkAuth from "@/lib/auth/checkAuth";
 
 // Validation schemas
 const updatePersonaSchema = z.object({

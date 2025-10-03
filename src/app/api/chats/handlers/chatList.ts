@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import checkAuth from "@/utils/checkAuth";
+import checkAuth from "@/lib/auth/checkAuth";
 import { getAllChats } from "@/db/queries/chatQueries";
 
 export default async function() {

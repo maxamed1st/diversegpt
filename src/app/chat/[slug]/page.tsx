@@ -1,13 +1,12 @@
 import { redirect } from "next/navigation";
-import { auth } from "@/../auth";
 import ChatInterface from "@/components/chat/ChatInterface";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { personas } from "@/db/schema";
+import checkAuth from "@/lib/auth/checkAuth";
 
 export default async function ChatPage({ params }: { params: Promise<{ slug: string }> }) {
-  const session = await auth();
-  const userId = session?.user?.id;
+  const { userId } = await checkAuth();
   if (!userId) {
     redirect("/api/auth/signin");
   }

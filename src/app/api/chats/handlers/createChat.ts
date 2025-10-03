@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import checkAuth from "@/utils/checkAuth";
+import checkAuth from "@/lib/auth/checkAuth";
 import { createChat } from "@/db/queries/chatQueries";
 import generateTitleFromUserMessage from "@/utils/generateName";
 

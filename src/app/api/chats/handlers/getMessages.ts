@@ -3,7 +3,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { eq, count } from "drizzle-orm";
 import { message } from "@/db/schema";
-import checkAuth from "@/utils/checkAuth";
+import checkAuth from "@/lib/auth/checkAuth";
 import { getChatMessages } from "@/db/queries/chatQueries";
 
 

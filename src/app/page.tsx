@@ -15,13 +15,13 @@ export default function Home() {
         </p>
         <div className="flex gap-4 justify-center">
           <Link
-            href="/api/auth/signin"
+            href="/user/signup"
             className="px-8 py-3 bg-primary text-primary-content rounded-lg font-medium hover:bg-primary/80 transition-colors"
           >
             Start Free Trial
           </Link>
           <Link
-            href="/api/auth/signin"
+            href="/user/login"
             className="px-8 py-3 bg-base-200 text-base-content rounded-lg font-medium hover:bg-base-300 transition-colors"
           >
             Sign In
@@ -157,7 +157,7 @@ export default function Home() {
             Start your journey into multi-persona AI conversations today. Transform the way you think, create, and solve problems.
           </p>
           <Link
-            href="/api/auth/signin"
+            href="/user/signup"
             className="px-8 py-3 bg-primary text-primary-content rounded-lg font-medium hover:bg-primary/80 transition-colors inline-block"
           >
             Begin Your Journey

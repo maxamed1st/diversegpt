@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import checkAuth from '@/utils/checkAuth';
+import checkAuth from '@/lib/auth/checkAuth';
 import { db } from '@/db';
 import { users } from '@/db/schema';
 import { eq } from 'drizzle-orm';

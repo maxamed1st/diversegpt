@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { users, accounts } from "@/db/schema";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import checkAuth from "@/utils/checkAuth";
+import checkAuth from "@/lib/auth/checkAuth";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
