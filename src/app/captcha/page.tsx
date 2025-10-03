@@ -43,7 +43,7 @@ export default function CaptchaPage({ searchParams }: { searchParams: Promise<{ 
           Verify You're Human
         </h1>
         <Turnstile
-          siteKey="0x4AAAAAAB4jgaDPJ3W5WNmD"
+          siteKey="0x4AAAAAAB4q0gy2TDUgl9xQ"
           options={{ size: "flexible" }}
           onSuccess={(token) => {handleVerify(token);}}
           onError={() => {
