@@ -62,6 +62,11 @@ export default function RootLayout({
         <App>{children}</App>
         <Toast />
         <CookieConsent />
+        <script
+            defer
+            data-domain="diversegpt.pro"
+            src="https://analytics.wepco.se/js/script.js"
+          ></script>
       </body>
     </html>
   );
