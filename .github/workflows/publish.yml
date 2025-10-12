@@ -28,7 +28,6 @@ jobs:
           cache-to: type=inline
           build-args: |
             STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
-            TURNSTILE_SECRET_KEY=${{ secrets.TURNSTILE_SECRET_KEY }}
 
   deploy:
     needs: build
