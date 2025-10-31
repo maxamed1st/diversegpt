@@ -5,6 +5,7 @@ import { db } from "@/db"
 import { accounts, users, personas, } from "@/db/schema"
 import Resend from "next-auth/providers/resend"
 import Discord from "next-auth/providers/discord"
+import Google from "next-auth/providers/google"
 import defaultPersonas from "@/utils/defaultPersonas"
 import setupStripeCustomerAndSubscription from "@/utils/setupStripeCustomerAndSubscription"
 import { cancelStripeSubscription } from "@/lib/stripe"
@@ -20,6 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       from: "DiverseGPT <no-reply@diversegpt.pro>",
     }),
     Discord,
+    Google,
   ],
   events: {
     async createUser({ user }) {
