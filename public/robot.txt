@@ -1,0 +1,3 @@
+user_agent: *
+allow: /
+sitemap: https://diversegpt.pro/sitemap.xml
