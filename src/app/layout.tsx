@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   description: "Chat with multiple customizable AI personas simultaneously. Control their identities, behaviors, and perspectives for rich, diverse conversations.",
   keywords: "AI chat, multiple personas, chatbot customization, artificial intelligence, conversational AI, AI personality, chat assistant",
   authors: [{ name: "DiverseGPT" }],
+  alternates: {
+    canonical: "https://diversegpt.pro",
+  },
   openGraph: {
     title: "DiverseGPT - Multi-Persona AI Chat Platform",
     description: "Chat with multiple customizable AI personas simultaneously. Control their identities, behaviors, and perspectives for rich, diverse conversations.",
