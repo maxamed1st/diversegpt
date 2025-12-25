@@ -68,7 +68,7 @@ export default function RootLayout({
         <script
             defer
             data-domain="diversegpt.pro"
-            src="https://analytics.wepco.se/js/script.js"
+            src="https://analytics.inboxassist.me/js/script.js"
           ></script>
       </body>
     </html>
