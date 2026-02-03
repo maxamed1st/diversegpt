@@ -168,7 +168,7 @@ export default function Home() {
       {/* Footer Section */}
       <footer className="container mx-auto px-4 py-8 text-center border-t border-base-300">
         <p className="text-base-content/70">
-          © 2025 DiverseGPT. All rights reserved.
+          © 2025-2026 DiverseGPT. All rights reserved.
         </p>
         <div className="mt-4 space-x-4">
           <Link href="/terms" className="text-base-content/70 hover:text-primary transition-colors">
