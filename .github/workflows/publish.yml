@@ -27,8 +27,6 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/wepco:diversegpt
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/wepco:diversegpt
           cache-to: type=inline
-          build-args: |
-            STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
 
   deploy:
     needs: build
