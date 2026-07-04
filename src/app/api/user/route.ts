@@ -2,10 +2,8 @@ import { db } from "@/db";
 import { eq } from "drizzle-orm";
 import { users, accounts } from "@/db/schema";
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
+import { stripe } from "@/lib/stripe";
 import checkAuth from "@/utils/checkAuth";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function DELETE(request: Request) {
   try {

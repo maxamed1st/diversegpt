@@ -1,11 +1,9 @@
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import { stripe, type Stripe } from '@/lib/stripe';
 import { db } from '@/db';
 import { users } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 async function updateUserSubscription(eventType: string, subscription: Stripe.Subscription) {
   const stripeCustomerId = subscription.customer as string;

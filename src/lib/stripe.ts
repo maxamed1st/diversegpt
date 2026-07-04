@@ -1,6 +1,15 @@
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+export function getStripe(): Stripe {
+  let _stripe: Stripe | null = null;
+  if (!_stripe) {
+    _stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+  }
+  return _stripe;
+}
+
+export const stripe = getStripe();
+export type { Stripe };
 
 export async function createStripeCustomer(email: string, userId: string) {
   try {
