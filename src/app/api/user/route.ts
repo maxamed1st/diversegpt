@@ -2,11 +2,12 @@ import { db } from "@/db";
 import { eq } from "drizzle-orm";
 import { users, accounts } from "@/db/schema";
 import { NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 import checkAuth from "@/utils/checkAuth";
 
 export async function DELETE(request: Request) {
   try {
+    const stripe = getStripe();
     const { userId } = await request.json();
     const { userId: authenticatedUserId } = await checkAuth();
 

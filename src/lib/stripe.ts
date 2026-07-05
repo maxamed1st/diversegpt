@@ -1,5 +1,7 @@
 import Stripe from "stripe";
 
+export type { Stripe };
+
 export function getStripe(): Stripe {
   let _stripe: Stripe | null = null;
   if (!_stripe) {
@@ -8,11 +10,9 @@ export function getStripe(): Stripe {
   return _stripe;
 }
 
-export const stripe = getStripe();
-export type { Stripe };
-
 export async function createStripeCustomer(email: string, userId: string) {
   try {
+    const stripe = getStripe();
     const customer = await stripe.customers.create({
       email: email,
       metadata: {
@@ -29,6 +29,7 @@ export async function createStripeCustomer(email: string, userId: string) {
 
 export async function createStripeSubscription(customerId: string) {
   try {
+    const stripe = getStripe();
     const subscription = await stripe.subscriptions.create({
       customer: customerId,
       items: [
@@ -49,7 +50,7 @@ export async function createStripeSubscription(customerId: string) {
 
 export async function createPortalSession(customerId: string) {
   try {
-
+    const stripe = getStripe();
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: customerId,
       return_url: `${process.env.BASE_URL}/chat/new`,
@@ -64,6 +65,7 @@ export async function createPortalSession(customerId: string) {
 
 export async function cancelStripeSubscription(subscriptionId: string) {
   try {
+    const stripe = getStripe();
     await stripe.subscriptions.update(subscriptionId, {
       cancel_at_period_end: true,
     });
@@ -75,6 +77,7 @@ export async function cancelStripeSubscription(subscriptionId: string) {
 
 export async function createStripeCheckoutSession( customerId: string, trialdays?: number ) {
   try {
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       line_items: [
