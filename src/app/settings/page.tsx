@@ -38,10 +38,10 @@ export default function Settings() {
             <p className="text-base-content/70">
               Contact us at:{" "}
               <a 
-                href="mailto:hello@diversegpt.pro" 
+                href="mailto:diversegpt@dlby.me" 
                 className="text-primary hover:text-primary/80 underline"
               >
-                diversegpt@wepco.se
+                diversegpt@dlby.me
               </a>
             </p>
           </div>

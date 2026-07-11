@@ -98,7 +98,7 @@ We may update this Privacy Policy periodically. We will notify you of any materi
 ## Contact Us
 
 If you have questions about this Privacy Policy, please contact us at:
-- Email: diversegpt@wepco.se
+- Email: diversegpt@dlby.me
 
 ## Data Retention
 

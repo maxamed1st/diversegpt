@@ -67,7 +67,7 @@ These terms shall be governed by and construed in accordance with the laws of th
 ## 11. Contact Information
 
 For any questions about these Terms of Service, please contact us at:
-- Email: diversegpt@wepco.se
+- Email: diversegpt@dlby.me
 
 ## 12. Severability
 

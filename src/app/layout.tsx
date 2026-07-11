@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   keywords: "AI chat, multiple personas, chatbot customization, artificial intelligence, conversational AI, AI personality, chat assistant",
   authors: [{ name: "DiverseGPT" }],
   alternates: {
-    canonical: "https://diversegpt.pro",
+    canonical: "https://diversegpt.dlby.me",
   },
   openGraph: {
     title: "DiverseGPT - Multi-Persona AI Chat Platform",
@@ -68,7 +68,7 @@ export default function RootLayout({
         <script
             defer
             data-domain="diversegpt.pro"
-            src="https://analytics.inboxassist.me/js/script.js"
+            src="https://analytics.dlby.me/js/script.js"
           ></script>
       </body>
     </html>
