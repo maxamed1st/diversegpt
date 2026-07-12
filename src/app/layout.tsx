@@ -67,7 +67,7 @@ export default function RootLayout({
         <CookieConsent />
         <script
             defer
-            data-domain="diversegpt.pro"
+            data-domain="diversegpt.dlby.me"
             src="https://analytics.dlby.me/js/script.js"
           ></script>
       </body>
