@@ -18,7 +18,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   }),
   providers: [
     Resend({
-      from: "DiverseGPT <diversegpt@dlby.me>",
+      from: "DiverseGPT <no-reply@diversegpt.dlby.me>",
     }),
     Discord,
     Google,
